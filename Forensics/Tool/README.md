@@ -78,5 +78,23 @@ H4S4N, joshwa, keshav, sandhya, shreya, sivapriya, srini, suba
 H4S4N, joshwa, keshav, sandhya, shreya, sivapriya, srini, suba
 ```
 câu 4
+## câu 4
 
+câu hỏi:
+
+Who was the last user to log into the computer?
+
+em vào:
+
+Results -> Extracted Content -> Operating System User Account
+
+ở bảng này em kiểm tra danh sách user account và thông tin logon/access liên quan. user đúng với câu hỏi là:
+
+sivapriya
+
+<img width="1518" height="787" alt="image" src="https://github.com/user-attachments/assets/1585ddd0-910a-4555-a9c6-3bb0c8a2d38c" />
+
+đáp án:
+
+sivapriya
 
