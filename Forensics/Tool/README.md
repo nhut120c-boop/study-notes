@@ -95,6 +95,53 @@ sivapriya
 <img width="1518" height="787" alt="image" src="https://github.com/user-attachments/assets/1585ddd0-910a-4555-a9c6-3bb0c8a2d38c" />
 
 đáp án:
-
+```
 sivapriya
+```
+câu 5
+
+câu hỏi:
+
+```text
+What was the IP address of the computer?
+```
+
+ban đầu em kiểm tra trong registry `SYSTEM` vì IP của Windows thường nằm ở phần network interface:
+
+```text
+Windows\System32\config\SYSTEM
+```
+
+nhưng giá trị tìm được là:
+
+```text
+DhcpIPAddress = 0.0.0.0
+```
+<img width="1536" height="697" alt="image" src="https://github.com/user-attachments/assets/a954143f-a134-4c55-88aa-c548f87317bc" />
+
+nên không lấy được IP thật từ chỗ này
+
+sau đó em kiểm tra các chương trình liên quan tới mạng trong `Program Files (x86)` và thấy phần mềm `Look@LAN`. Đây là tool liên quan tới mạng LAN nên có thể lưu IP local của máy
+
+em mở file cấu hình:
+
+```text
+Program Files (x86)\Look@LAN\irunin.ini
+```
+
+trong file này có dòng:
+
+```text
+LANIP=192.168.130.216
+```
+
+<img width="1532" height="762" alt="image" src="https://github.com/user-attachments/assets/7d606ace-1aa8-4a38-92fc-1cc3b82ec3de" />
+
+
+`LANIP` là IP nội bộ của máy trong mạng LAN, nên đáp án là:
+
+```text
+192.168.130.216
+```
+
 
