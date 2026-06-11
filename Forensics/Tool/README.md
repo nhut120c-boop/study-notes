@@ -145,3 +145,93 @@ LANIP=192.168.130.216
 ```
 
 
+câu 6
+
+câu hỏi:
+
+```text
+What was the MAC address of the computer? (XX-XX-XX-XX-XX-XX)
+````
+
+em kiểm tra tiếp file cấu hình của Look@LAN:
+
+```text
+Program Files (x86)\Look@LAN\irunin.ini
+```
+
+trong file có dòng:
+
+```text
+LANNIC=0800272cc4b9
+```
+
+<img width="1528" height="717" alt="image" src="https://github.com/user-attachments/assets/12d6f7d5-6bbf-4767-b6df-09687660e818" />
+
+
+`LANNIC` là thông tin card mạng LAN. Đề yêu cầu format `XX-XX-XX-XX-XX-XX`, nên em tách giá trị này thành:
+
+```text
+08-00-27-2C-C4-B9
+```
+
+đáp án:
+
+```text
+08-00-27-2C-C4-B9
+```
+câu 7
+
+câu hỏi:
+
+```text
+What is the name of the network card on this computer?
+```
+
+ban đầu em nghĩ tên card mạng sẽ nằm trong registry `SYSTEM`, nên thử kiểm tra:
+
+```text
+Windows\System32\config\SYSTEM
+```
+
+và nhánh network adapter class:
+
+```text
+ControlSet001\Control\Class\{4d36e972-e325-11ce-bfc1-08002be10318}
+```
+
+nhưng lúc thử load hive bằng `regedit` thì bị rỗng / không đọc được đúng hive của image. Có lúc em còn nhìn nhầm sang `HKEY_LOCAL_MACHINE\SYSTEM` của máy VM đang chạy Autopsy, nên ra sai card:
+
+```text
+Intel(R) 82574L Gigabit Network Connection
+```
+
+đây không phải đáp án vì nó là thông tin của VM, không phải của disk image.
+
+sau đó em chuyển qua output RegRipper mà Autopsy đã tạo sẵn từ hive `SOFTWARE` của image:
+
+```text
+Case Files\ModuleOutput\RecentActivity\reg\SOFTWARE-regripper-179465-full
+```
+
+trong file này em tìm section:
+
+```text
+networkcards
+Microsoft\Windows NT\CurrentVersion\NetworkCards
+```
+
+ở đây thấy tên card mạng:
+
+```text
+Intel(R) PRO/1000 MT Desktop Adapter
+```
+
+<img width="1522" height="812" alt="image" src="ảnh_câu_7_của_em" />
+
+đáp án:
+
+```text
+Intel(R) PRO/1000 MT Desktop Adapter
+```
+
+
