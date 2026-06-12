@@ -179,39 +179,35 @@ LANNIC=0800272cc4b9
 ```text
 08-00-27-2C-C4-B9
 ```
+````markdown
 câu 7
 
 câu hỏi:
 
 ```text
 What is the name of the network card on this computer?
-```
+````
 
-ban đầu em nghĩ tên card mạng sẽ nằm trong registry `SYSTEM`, nên thử kiểm tra:
+ban đầu em thử kiểm tra registry hive `SYSTEM`:
 
 ```text
 Windows\System32\config\SYSTEM
 ```
 
-và nhánh network adapter class:
-
-```text
-ControlSet001\Control\Class\{4d36e972-e325-11ce-bfc1-08002be10318}
-```
-
-nhưng lúc thử load hive bằng `regedit` thì bị rỗng / không đọc được đúng hive của image. Có lúc em còn nhìn nhầm sang `HKEY_LOCAL_MACHINE\SYSTEM` của máy VM đang chạy Autopsy, nên ra sai card:
-
-```text
-Intel(R) 82574L Gigabit Network Connection
-```
-
-đây không phải đáp án vì nó là thông tin của VM, không phải của disk image.
+nhưng khi extract ra ngoài thì file bị rỗng / không đọc được đúng dữ liệu, nên không lấy được thông tin card mạng theo hướng này.
 
 sau đó em chuyển qua output RegRipper mà Autopsy đã tạo sẵn từ hive `SOFTWARE` của image:
+
+<img width="1535" height="792" alt="image" src="https://github.com/user-attachments/assets/4f0f9637-41e9-4182-8f98-89be79c572b8" />
+
+<img width="1536" height="806" alt="image" src="https://github.com/user-attachments/assets/e1eb5524-5a24-4fb1-b7b0-56d4616da0f8" />
+<img width="1527" height="787" alt="image" src="https://github.com/user-attachments/assets/2064f8e8-128c-4615-8ea1-84a38442100d" />
+
 
 ```text
 Case Files\ModuleOutput\RecentActivity\reg\SOFTWARE-regripper-179465-full
 ```
+<img width="1528" height="807" alt="image" src="https://github.com/user-attachments/assets/542d4f55-8465-4f32-b5c4-fd96b73a3e9e" />
 
 trong file này em tìm section:
 
@@ -220,13 +216,13 @@ networkcards
 Microsoft\Windows NT\CurrentVersion\NetworkCards
 ```
 
-ở đây thấy tên card mạng:
+ở đây thấy tên card mạng là:
 
 ```text
 Intel(R) PRO/1000 MT Desktop Adapter
 ```
 
-<img width="1522" height="812" alt="image" src="ảnh_câu_7_của_em" />
+<img width="1535" height="796" alt="image" src="https://github.com/user-attachments/assets/c55cfa09-bc09-4911-9be9-c348ccd9db23" />
 
 đáp án:
 
@@ -234,4 +230,80 @@ Intel(R) PRO/1000 MT Desktop Adapter
 Intel(R) PRO/1000 MT Desktop Adapter
 ```
 
+```
+```
+câu 8
+câu hỏi: 
+```
+What is the name of the network monitoring tool?
+```
+như câu ở trên thì công cụ em thấy được là look@lan
 
+đáp án là:
+```
+Look@Lan
+```
+
+câu 9
+câu hỏi:
+```
+A user bookmarked a Google Maps location. What are the coordinates of the location?
+```
+em kiểm tra dữ liệu lịch sử duyệt web từ file places.sqlite trong Autopsy
+
+nhìn xuống phần Visit Details ở góc dưới màn hình, tọa độ vị trí được lưu ngay trong phần Title khi người dùng xem hoặc đánh dấu trên Google Maps
+<img width="1526" height="772" alt="image" src="https://github.com/user-attachments/assets/eedd4ffc-2ea5-4cf5-a0db-5075612e693e" />
+
+đáp án là:
+```
+12°52'23.0"N 80°13'25.0"E
+```
+
+câu 10 
+câu hỏi:
+
+```text
+A user has his full name printed on his desktop wallpaper. What is the user's full name?
+
+```
+
+để tìm hình nền thực tế đang được sử dụng, em trích xuất và kiểm tra registry hive `NTUSER.DAT` của tài khoản `joshwa`:
+
+```text
+Users\joshwa\NTUSER.DAT
+
+```
+<img width="1530" height="770" alt="image" src="https://github.com/user-attachments/assets/ae104bf1-f161-4be0-a29d-e86963d55643" />
+
+trong registry, em tìm đến key cấu hình ảnh nền:
+
+```text
+Control Panel\Desktop
+
+```
+
+tại đây, giá trị `Wallpaper` lưu đường dẫn trỏ về một file ảnh nằm ở Downloads
+
+<img width="1536" height="762" alt="image" src="https://github.com/user-attachments/assets/a507b327-56d3-4635-9c0e-aaf171d85b5b" />
+
+
+em lần theo đường dẫn đó và mở thư mục:
+
+```text
+Users\joshwa\Dowloads 
+
+```
+
+<img width="1528" height="753" alt="image" src="https://github.com/user-attachments/assets/7cd30184-497a-4711-bf4b-415d97aa8860" />
+
+khi xem trực tiếp file ảnh cyberpunk này trong Autopsy, trên bề mặt bức ảnh có in rõ dòng chữ tên đầy đủ của user là `Anto Joshwa`.
+
+
+<img width="1533" height="792" alt="image" src="https://github.com/user-attachments/assets/64b0c51f-a37f-4953-a942-5470cbd76f37" />
+
+đáp án là:
+
+```text
+Anto Joshwa
+
+```
