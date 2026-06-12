@@ -307,3 +307,38 @@ khi xem trực tiếp file ảnh cyberpunk này trong Autopsy, trên bề mặt 
 Anto Joshwa
 
 ```
+
+câu 11:
+
+câu hỏi:
+
+```text
+A user had a file on her desktop. It had a flag but she changed the flag using PowerShell. What was the first flag?
+
+```
+
+bước làm:
+
+để tìm flag ban đầu, em tiến hành kiểm tra lịch sử gõ lệnh powershell của user `shreya`. em truy cập vào file lịch sử theo đường dẫn sau:
+
+```text
+Users\shreya\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt
+
+```
+
+<img width="1166" height="712" alt="image" src="https://github.com/user-attachments/assets/82bde5df-09af-473a-ba25-a743e055ab8f" />
+
+
+khi xem nội dung text của file này, em thấy danh sách các lệnh đã được nhập. lệnh đầu tiên được sử dụng để tạo và ghi flag vào file `shreya.txt` là:
+
+```text
+Add-Content .\shreya.txt 'flag{HarleyQuinnForQueen}'
+
+```
+
+đáp án là:
+
+```text
+flag{HarleyQuinnForQueen}
+
+```
