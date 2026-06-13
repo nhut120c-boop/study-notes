@@ -342,3 +342,96 @@ Add-Content .\shreya.txt 'flag{HarleyQuinnForQueen}'
 flag{HarleyQuinnForQueen}
 
 ```
+câu 12
+
+câu hỏi:
+
+```text
+The same user found an exploit to escalate privileges on the computer. What was the message to the device owner?
+
+```
+
+bước làm:
+
+để tìm thông điệp mã khai thác để lại cho chủ máy, em kiểm tra thư mục Desktop của user `shreya` theo đường dẫn:
+
+```text
+Users\shreya\Desktop\
+
+```
+
+tại đây có một file tên là `exploit.ps1`. khi xem nội dung của file này ở phần text, em thấy đoạn mã:
+
+```text
+New-Item "C:\Users\H454N\Desktop\hacked.txt"
+Add-Content C:\Users\H454N\Desktop\hacked.txt 'Flag{I-hacked-you}'
+
+```
+
+<img width="1024" height="601" alt="image" src="https://github.com/user-attachments/assets/2d68a13d-2cd4-4fc4-9e20-3ddccc616b4d" />
+
+
+đoạn mã này thực thi quyền administrator để tạo một file tên `hacked.txt` trên màn hình desktop của chủ máy (user `H454N`) và ghi vào đó một thông điệp
+
+đáp án là:
+
+```text
+Flag{I-hacked-you}
+
+```
+câu 13
+
+câu hỏi:
+
+```text
+2 hack tools focused on passwords were found in the system. What are the names of these tools? (alphabetical order)
+
+```
+
+bước làm:
+
+để tìm các công cụ hack mật khẩu trên hệ thống, em tiến hành thu thập dấu vết từ các thư mục và lịch sử thực thi:
+
+1. kiểm tra thư mục `Downloads` của user `H454N`, em phát hiện file nén của công cụ thứ nhất là `mimikatz_trunk.zip`.
+
+
+<img width="1040" height="555" alt="image" src="https://github.com/user-attachments/assets/4a67ce66-21d8-48fa-a13b-8bc02d1bddfa" />
+
+   
+3. kiểm tra danh sách các chương trình đã từng chạy trên hệ thống tại mục `Extracted Content` -> `Run Programs` (dữ liệu Prefetch). tại đây, em phát hiện lịch sử thực thi của công cụ thứ hai là `LAZAGNE.EXE`
+
+<img width="1097" height="692" alt="image" src="https://github.com/user-attachments/assets/70097d9a-2c85-4d1c-9461-f73b7883dbcf" />
+
+hai công cụ được tìm thấy là `lazagne` và `mimikatz`. sắp xếp tên 2 công cụ này theo thứ tự bảng chữ cái.
+
+đáp án là:
+
+```text
+lazagne, mimikatz
+
+```
+câu 14
+
+câu hỏi:
+
+```text
+There is a YARA file on the computer. Inspect the file. What is the name of the author?
+
+```
+
+bước làm:
+
+để tìm file YARA trên hệ thống, em sử dụng tính năng tìm kiếm (File Search) với từ khóa `*.yar`.
+
+kết quả lọc ra được một file tên là `kiwi_passwords.yar`. khi coi nội dung của file này ở tab text, phần `meta:` có chứa các thông tin mô tả về rule (quy tắc). tại đây, em thấy thông tin tác giả được ghi chú rõ ràng ở dòng `author`.
+
+
+<img width="1077" height="673" alt="image" src="https://github.com/user-attachments/assets/bc37dc5e-799e-4892-bc2f-0d6301500f7a" />
+
+
+đáp án là:
+
+```text
+Benjamin DELPY (gentilkiwi)
+
+```
