@@ -22,3 +22,13 @@ câu trả lời
 ```
 16299
 ```
+What is the hostname of the computer?
+
+em tiêp tục coi trong ControlSet001 ở mục Computername
+
+<img width="1536" height="863" alt="image" src="https://github.com/user-attachments/assets/c3deb8a1-402d-4d73-84f4-c85d06854667" />
+
+câu trả lời 
+```
+TOTALLYNOTAHACK
+```
