@@ -51,5 +51,12 @@ thấy được mã zip đề bài yêu cầu
 
 câu trả lời: 
 19709
+câu hỏi:
 
+What are the initials of the person who contacted the admin user from TAAUSAI?
 
+em vào Mirosotf vào outlook để export file ost ra, và dùng kernel OST  để đọc file ost
+và soi tìm thấy mail từ taausai mà thấy chữ MS ở đầu
+<img width="1536" height="863" alt="image" src="https://github.com/user-attachments/assets/c66b147b-5a44-40e3-8d6d-94b451c1384d" />
+
+câu trả lời: ```MS```
