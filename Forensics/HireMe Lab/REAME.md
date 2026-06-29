@@ -32,3 +32,24 @@ câu trả lời
 ```
 TOTALLYNOTAHACK
 ```
+câu 4 A messaging application was used to communicate with a fellow Alpaca enthusiest. What is the name of the software?
+
+em export file software xong tìm trong App path theo hint 
+
+<img width="1536" height="577" alt="image" src="https://github.com/user-attachments/assets/cd7c776f-6ce1-4831-8207-4840e89c2a1c" />
+thấy được Skype là app để nhắn tin duy nhất trong đó
+
+câu trả lời: 
+Skype
+
+câu 5: What is the zip code of the administrator's post?
+
+em vào trong Karen thì thấy user chỉ xài chrome nên em bắt đầu trích data từ web data của chrome và dùng SQlite để dò 
+
+<img width="967" height="456" alt="image" src="https://github.com/user-attachments/assets/c5513ed5-4975-4245-9fc6-af6a3ee85fa7" />
+thấy được mã zip đề bài yêu cầu 
+
+câu trả lời: 
+19709
+
+
