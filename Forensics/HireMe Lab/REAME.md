@@ -60,3 +60,12 @@ và soi tìm thấy mail từ taausai mà thấy chữ MS ở đầu
 <img width="1536" height="863" alt="image" src="https://github.com/user-attachments/assets/c66b147b-5a44-40e3-8d6d-94b451c1384d" />
 
 câu trả lời: ```MS```
+
+câu hỏi 
+
+ở câu này em tiếp tục xem các email của taausai gửi cho karen và thấy được mức lương là 150,000
+
+<img width="1536" height="863" alt="image" src="https://github.com/user-attachments/assets/5381024f-890c-4984-b3e5-c46504ad17f0" />
+
+câu trả lời là: ```150000```
+câu hỏi 
