@@ -167,9 +167,13 @@ ròi tìm trong control mục timezoneinfomation
 câu trả lời UTC
 
 câu hỏi When was AlpacaCare.docx last accessed?
+
 em tìm trong phân vùng 3, thấy được AlpacaCare.docx
+
 sau đó em export nó ra vào xem accessed 
+
 <img width="487" height="533" alt="image" src="https://github.com/user-attachments/assets/6ee98a42-9b94-4c94-899b-2060b98b752e" />
+
 sau đó trừ 7 tiếng theo giờ UTC để có kết quả 
 
 câu trả lời: 
@@ -179,7 +183,52 @@ câu trả lời:
 câu hỏi There was a second partition on the drive. What is the letter assigned to it?
 
 em vào recent để tìm lối tắt đến alpacare. doxc. thấy tệp alpacare.lnk có đường dẫn tới phân vùng A:
+
 <img width="1536" height="863" alt="image" src="https://github.com/user-attachments/assets/0dd42db0-17bc-4793-9a5b-026f6e7a903f" />
 đáp án ```A```
+
 câu hỏi 
 
+What is the answer to the question Company's manager asked Karen?
+
+em vẫn coi trong Kernel và thấy được ngay câu trả lời 
+
+<img width="1536" height="863" alt="image" src="https://github.com/user-attachments/assets/bd776331-107a-4787-8fe6-6545ef74a372" />
+
+TheCardCriesNoMore
+
+câu hỏi What is the job position offered to Karen? (3 words, 2 spaces in between)
+
+em vẫn xem toàn bộ email gửi 
+<img width="1492" height="837" alt="image" src="https://github.com/user-attachments/assets/5866a4dc-3524-42cc-8459-638dd522733a" />
+
+câu trả lời: cyber security analyst
+
+câu hỏi
+
+When was the admin user password last changed?
+
+Em export file SAM ra rồi mở bằng Registry Explorer
+
+Trong SAM, mỗi tài khoản người dùng sẽ có một RID riêng. Đầu tiên em vào:
+ Users
+ Names
+
+để xác định tài khoản admin tương ứng với RID nào. Sau đó mở RID tương ứng và xem giá trị F.
+
+Giá trị F chứa nhiều thông tin của tài khoản, trong đó có trường Password Last Set (thời điểm đổi mật khẩu lần cuối). Registry Explorer sẽ tự giải mã timestamp này.
+
+<img width="1536" height="863" alt="image" src="https://github.com/user-attachments/assets/6a475576-1d71-44e1-a7cc-ab048a855e0f" />
+
+
+Câu trả lời:
+```
+03/21/2019 19:13:09
+```
+What version of Chrome is installed on the machine?
+em vào last version trong aappdata thấy 
+<img width="1536" height="863" alt="image" src="https://github.com/user-attachments/assets/80fa7155-73a6-47b7-a159-22ca3f4b013e" />
+
+đáp án 72.0.3626.121
+
+câu hỏi 
