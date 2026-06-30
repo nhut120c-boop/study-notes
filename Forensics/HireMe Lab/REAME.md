@@ -232,3 +232,35 @@ em vào last version trong aappdata thấy
 đáp án 72.0.3626.121
 
 câu hỏi 
+
+What is the URL used to download Skype?
+
+em exprot history từ chorme 
+
+sau đó dùng SQLite để tìm các link downloads 
+<img width="1536" height="863" alt="image" src="https://github.com/user-attachments/assets/cd2688c5-1594-435d-90ce-2ea00ff20dd0" />
+
+đáp án https://download.skype.com/s4l/download/win/Skype-8.41.0.54.exe
+
+câu hỏi
+What is the domain name of the website Karen browsed on Alpaca care that the file AlpacaCare.docx is based on?
+
+
+Đầu tiên em đổi tên AlpacaCare.docx thành AlpacaCare.zip rồi giải nén. Sau đó mở file:
+
+<img width="847" height="722" alt="image" src="https://github.com/user-attachments/assets/5e66d88e-7bc9-4bd4-9b91-aac4c025b284" />
+
+word/document.xml
+<img width="932" height="785" alt="image" src="https://github.com/user-attachments/assets/7f43a4ca-464a-4920-a2a9-d9a4f569eb37" />
+
+Tìm chuỗi http hoặc HYPERLINK sẽ thấy ngay hyperlink gốc mà tài liệu được tạo dựa trên:
+
+HYPERLINK "http://palominoalpacafarm.com/" \o "Palomino Alpaca Farm"
+
+Từ đó xác định domain của website là:
+
+palominoalpacafarm.com
+
+Câu trả lời
+
+palominoalpacafarm.com
