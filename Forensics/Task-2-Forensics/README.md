@@ -986,7 +986,10 @@ lab Windowns Fudamentals 2
 ```
 https://github.com/nhut120c-boop/Windows-Fundamentals-2/blob/main/README.md
 ```
-
+Investigating-Windows
+```
+https://github.com/nhut120c-boop/study-notes/tree/main/TryHackMe/Investigating-Windows
+```
 
 tool Autopsy
 ```
@@ -996,4 +999,8 @@ https://github.com/nhut120c-boop/study-notes/tree/main/Forensics/Tool
 Hireme lab
 ```
 https://github.com/nhut120c-boop/study-notes/blob/main/Forensics/HireMe%20Lab/REAME.md
+```
+Chall: 
+```
+https://github.com/nhut120c-boop/study-notes/tree/main/Forensics/Basic-Disk
 ```
