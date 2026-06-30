@@ -142,8 +142,12 @@ câu hỏi
 <img width="1536" height="863" alt="image" src="https://github.com/user-attachments/assets/5381024f-890c-4984-b3e5-c46504ad17f0" />
 
 câu trả lời là: ```150000```
-câu hỏi 
+câu hỏi
+
+What country is the admin user meeting the hacker group in?
+
 em tiếp tục tìm trong mail, tháy có đề cập đến tọa độ 
+
 <img width="1430" height="747" alt="image" src="https://github.com/user-attachments/assets/5cf5ff80-14a6-4472-89d3-f6833870e544" />
 
 
@@ -151,4 +155,31 @@ em dùng AI để xác định quốc gia
 <img width="1536" height="640" alt="image" src="https://github.com/user-attachments/assets/a32bcf53-ee05-49ea-9b81-353f6efb8ba1" />
 
 câu trả lời là ```Egypt```
+
+câu hỏi: What is the machine's timezone? (Use the three-letter abbreviation)
+
+em vào file system bằng resgistry 
+
+ròi tìm trong control mục timezoneinfomation 
+
+<img width="1536" height="863" alt="image" src="https://github.com/user-attachments/assets/e7571a4b-d0b2-4daf-bece-404a27ccc25c" />
+
+câu trả lời UTC
+
+câu hỏi When was AlpacaCare.docx last accessed?
+em tìm trong phân vùng 3, thấy được AlpacaCare.docx
+sau đó em export nó ra vào xem accessed 
+<img width="487" height="533" alt="image" src="https://github.com/user-attachments/assets/6ee98a42-9b94-4c94-899b-2060b98b752e" />
+sau đó trừ 7 tiếng theo giờ UTC để có kết quả 
+
+câu trả lời: 
+```
+2019-03-17 21:52
+```
+câu hỏi There was a second partition on the drive. What is the letter assigned to it?
+
+em vào recent để tìm lối tắt đến alpacare. doxc. thấy tệp alpacare.lnk có đường dẫn tới phân vùng A:
+<img width="1536" height="863" alt="image" src="https://github.com/user-attachments/assets/0dd42db0-17bc-4793-9a5b-026f6e7a903f" />
+đáp án ```A```
+câu hỏi 
 
