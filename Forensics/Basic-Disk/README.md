@@ -83,5 +83,32 @@ KCSC{win10-19043_cause_i'd_die_for_you_you_know_i'd_still_die_for_you}
 
 em không có submit được nên không chắc đúng, tại em tháy còn nhiều cái em chưa khai thác được trong history của trình duyệt
 
+ sau khi biết fake flag
+ 
+em tiếp tục kiểm tra 
+các web mà user đã search thấy 
 
+<img width="1525" height="863" alt="image" src="https://github.com/user-attachments/assets/798cd46d-badb-4455-9938-34406c594196" />
 
+em dán vào trình duyệt 
+
+<img width="1536" height="863" alt="image" src="https://github.com/user-attachments/assets/abf002ad-6d4f-418e-91f2-7ad0c7129a63" />
+
+bị ERR_CONNECTION_REFUSED
+
+em bật 1.1.1.1 lên thì vào dc 
+
+<img width="946" height="2047" alt="image" src="https://github.com/user-attachments/assets/bd1858bb-cace-47aa-ab37-1b25cd551d42" />
+
+web hỏi pass em dùng pass kiếm dcd trong bin là p@$$w0rd3458
+
+được aGVoZV95MHVfZjB1bmRfaXQ=
+
+và decode ra hehe_y0u_f0und_it
+
+ ghép với KCSC{win10-19043_ được 
+```
+ KCSC{win10-19043_hehe_y0u_f0und_it}
+
+```
+em cũng chưa submit được nên chưa chắc là đúng 
