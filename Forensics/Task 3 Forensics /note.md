@@ -46,5 +46,8 @@ volatility là framework mã nguồn mở dùng để phân tích ảnh bộ nh�
 
 volatility không phải công cụ thu thập RAM, nó chỉ đọc và  phân tích file dump có sẵn để tìm thông tin cần thiết
 
-
+```volatility2``` là thế hệ cũ với mô hình profile, address space, overlay và plugin dựa nhiều vào
+python2
+```volatility3``` là bản viết lại với context, symbol table, translation layer, template, object,
+automagic, requirements và treegrid
 
