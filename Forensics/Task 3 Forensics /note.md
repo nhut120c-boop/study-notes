@@ -1,7 +1,7 @@
 ## Dump Ram
-cách 1 lấy ram máy thật
+**cách 1 lấy ram máy thật**
 
-công cụ ftk imager bản portable
+công cụ ```ftk imager bản portable```
 
 bước 1 chép công cụ vào một usb sạch
 
@@ -17,9 +17,9 @@ bước 6 tích chọn include pagefile nếu muốn lấy thêm bộ nhớ ảo
 
 bước 7 nhấn capture đợi chạy xong là có file mem
 
-cách 2 lấy ram máy ảo
+**cách 2 lấy ram máy ảo**
 
-với vmware
+*với vmware*
 
 bước 1 lúc máy ảo đang chạy nhấn nút suspend để tạm dừng
 
@@ -29,7 +29,7 @@ bước 3 tìm copy file có đuôi .vmem ra chỗ khác
 
 file .vmem chính là file ram của máy ảo
 
-với virtualbox
+*với virtualbox*
 
 bước 1 mở cmd trên máy thật
 
