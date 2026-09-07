@@ -48,6 +48,7 @@ volatility không phải công cụ thu thập RAM, nó chỉ đọc và  phân 
 
 ```volatility2``` là thế hệ cũ với mô hình profile, address space, overlay và plugin dựa nhiều vào
 python2
+
 ```volatility3``` là bản viết lại với context, symbol table, translation layer, template, object,
 automagic, requirements và treegrid
 
