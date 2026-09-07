@@ -52,3 +52,5 @@ python2
 ```volatility3``` là bản viết lại với context, symbol table, translation layer, template, object,
 automagic, requirements và treegrid
 
+**1. memory forensics và cách volatility nhìn ảnh nhớ**
+
