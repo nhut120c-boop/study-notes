@@ -62,4 +62,4 @@ automagic, requirements và treegrid
 ram có thể chứa ```object chưa từng được ghi đầy đủ``` xuống ổ đĩa như ```token, command line,
 socket, khóa mã hóa, vùng code đã giải mã và dữ liệu tạm```
 
-
+```RAM```có thể thiếu dữ liệu do ```swap```, ```vùng nhớ không được thu thập```, ```nén bộ nhớ```, ```lỗi đọc``` hoặc ```memory image không đầy đủ```. Vì vậy, không tìm thấy **artifact không có nghĩa là nó chưa từng tồn tại**
