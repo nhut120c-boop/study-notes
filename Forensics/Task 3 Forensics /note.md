@@ -62,4 +62,13 @@ automagic, requirements và treegrid
 ram có thể chứa ```object chưa từng được ghi đầy đủ``` xuống ổ đĩa như ```token, command line,
 socket, khóa mã hóa, vùng code đã giải mã và dữ liệu tạm```
 
-```RAM```có thể thiếu dữ liệu do ```swap```, ```vùng nhớ không được thu thập```, ```nén bộ nhớ```, ```lỗi đọc``` hoặc ```memory image không đầy đủ```. Vì vậy, không tìm thấy **artifact không có nghĩa là nó chưa từng tồn tại**
+```RAM```có thể thiếu dữ liệu do ```swap```, ```vùng nhớ không được thu thập```, ```nén bộ nhớ```, ```lỗi đọc``` hoặc ```memory image không đầy đủ```. Vì vậy, không tìm thấy **artifact không có nghĩa là nó chưa từng tồn tại** 
+
+plugin thường làm việc với **`virtual address`** do kernel hoặc process sử dụng, nhưng dữ liệu trong memory dump lại nằm ở **`physical address`** hoặc **`file offset`**. vì vậy framework phải dịch địa chỉ theo chuỗi:
+
+**`virtual address` → `page table/dtb` → `physical address` → `file offset` → byte trong memory dump**
+
+nếu một bước dịch bị sai, plugin có thể báo lỗi, trả output rỗng, hoặc nguy hiểm hơn là trả về dữ liệu có vẻ hợp lệ nhưng thực tế bị đọc hoặc diễn giải sai.
+
+
+
