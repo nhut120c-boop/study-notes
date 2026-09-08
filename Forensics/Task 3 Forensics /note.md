@@ -54,3 +54,12 @@ automagic, requirements và treegrid
 
 **1. memory forensics và cách volatility nhìn ảnh nhớ**
 
+*ram không phải là ổ đĩa*
+
+ổ đĩa thường lưu file và metadata theo cấu trúc tương đối ổn định, còn ram chứa trạng thái
+đang chạy của hệ điều hành và ứng dụng tại một thời điểm
+
+ram có thể chứa ```object chưa từng được ghi đầy đủ``` xuống ổ đĩa như ```token, command line,
+socket, khóa mã hóa, vùng code đã giải mã và dữ liệu tạm```
+
+
