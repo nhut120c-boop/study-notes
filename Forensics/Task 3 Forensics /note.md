@@ -70,5 +70,26 @@ plugin thường làm việc với **`virtual address`** do kernel hoặc proces
 
 nếu một bước dịch bị sai, plugin có thể báo lỗi, trả output rỗng, hoặc nguy hiểm hơn là trả về dữ liệu có vẻ hợp lệ nhưng thực tế bị đọc hoặc diễn giải sai.
 
+**list và scan**
 
+**list plugin** thường đi theo **linked list** hoặc các **cấu trúc quản lý chuẩn của kernel** để lấy ra các object mà hệ điều hành đang quản lý. Có thể hình dung giống như xem **mục lục của một cuốn sách**: plugin dựa vào "danh sách" có sẵn để tìm process hoặc object
 
+**scan plugin** thì không phụ thuộc hoàn toàn vào linked list đó mà **quét các vùng nhớ** để tìm **chữ ký, header hoặc object có hình dạng phù hợp**. Có thể hình dung như tự lật các trang của cả cuốn sách để tìm nội dung, thay vì chỉ xem mục lục
+
+**malware có thể unlink object khỏi linked list**, làm cho object không còn xuất hiện trong danh sách quản lý của kernel nhưng dữ liệu của object chưa chắc bị xóa ngay khỏi RAM. Vì vậy cùng một memory dump, **list và scan có thể cho kết quả khác nhau**
+
+Cách làm hợp lý là dùng **nhiều góc nhìn để đối chiếu** như `pslist`, `psscan`, `pstree`, `netscan`, `malfind`, **module list**, **handle** và **command line**. Sau đó kết hợp với **dữ liệu trên ổ đĩa và log** để xem các dấu vết có khớp với nhau hay không.
+
+**giữ nguyên hiện trạng và kiểm chứng memory dump**
+
+Trước khi phân tích cần ghi lại **hash, kích thước file, thời điểm thu thập, nguồn ảnh, công cụ thu thập, phiên bản framework, phiên bản Python và command line** để có thể kiểm tra lại nguồn gốc và tính toàn vẹn của memory dump.
+
+Nên dùng **bản sao làm việc** để phân tích thay vì chỉnh sửa trực tiếp file gốc. Nếu cần thao tác hoặc chuyển đổi dữ liệu thì giữ lại file gốc để đối chiếu.
+
+Có thể kiểm tra nhanh bằng các lệnh:
+
+```
+sha256sum memory.raw
+stat memory.raw
+file memory.raw
+```
