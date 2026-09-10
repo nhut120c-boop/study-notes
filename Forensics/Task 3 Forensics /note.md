@@ -93,3 +93,14 @@ sha256sum memory.raw
 stat memory.raw
 file memory.raw
 ```
+
+--- 
+## Volatility2
+
+luồng cơ bản của volatility có thể mô tả như sau
+
+<img width="2048" height="768" alt="image" src="https://github.com/user-attachments/assets/ca753713-c184-4062-8760-6610aaaf2f38" />
+
+
+
+
