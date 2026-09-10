@@ -102,5 +102,11 @@ luồng cơ bản của volatility có thể mô tả như sau
 <img width="2048" height="768" alt="image" src="https://github.com/user-attachments/assets/ca753713-c184-4062-8760-6610aaaf2f38" />
 
 
-
+tham số ```-f``` trỏ tới ảnh nhớ, ```--profile``` chọn mô tả hệ điều hành và plugin quyết định cách
+truy vấn object
+```
+python2 vol.py -f memory.raw --profile=win7sp1x64 pslist
+```
+trong volatility, nhiều option được quản lý qua cấu hình chung hoặc được plugin đăng ký
+riêng, nên cách đặt tên và cách xuất file có thể không đồng nhất
 
