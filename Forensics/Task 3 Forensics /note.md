@@ -126,16 +126,35 @@ nếu offset của profile không khớp kernel trong ảnh, việc đọc field
 profile thường được chọn qua **```imageinfo```** ,**```kdbgscan```** hoặc hiểu biết từ hệ thống thu thập
 
 ```
-profile cần biết các thông tin như tên type, offset của field, kích thước object, kiểu dữ liệu,
-constant, kiến trúc và một số overlay đặc thù
-ví dụ plugin muốn đọc tên image của một process cần biết vị trí của field ImageFileName
-trong cấu trúc _EPROCESS
-nếu offset của profile không khớp kernel trong ảnh, việc đọc field sẽ sai dù file ảnh vẫn đọc
-được
-profile thường được chọn qua imageinfo , kdbgscan hoặc hiểu biết từ hệ thống thu thậ
+python2 vol.py --info | less
+python2 vol.py -f memory.raw imageinfo
+python2 vol.py -f memory.raw kdbgscan
 ```
 
 ```imageinfo``` đưa ra gợi ý, không phải bằng chứng tuyệt đối rằng profile đầu tiên là đúng
 cần xác nhận bằng kiến trúc  bit hoặc  bit, kernel debugger block, thời gian khởi động,
 tiến trình hệ thống, module và kết quả của nhiều plugin
+
+**2. address space stack**
+
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/bf585123-784e-4a2e-b4f9-88c7617fd3ab" />
+
+
+fileaddressspace đọc byte từ file
+
+lớp **crash dump** hoặc **hibernation** hiểu header và cách bố trí page của định dạng 
+
+lớp **paged memory** đọc page table và dịch **virtual address** sang **physical offset**
+
+plugin chỉ gọi **read , zread , is_valid_address , vtop hoặc các helper** cao hơn mà không cần
+
+tự biết raw dump khác crash dump ra sao
+
+trong volshell có thể xem stack
+
+```
+>>> addrspace()
+>>> addrspace().base
+>>> addrspace().base.base
+```
 
