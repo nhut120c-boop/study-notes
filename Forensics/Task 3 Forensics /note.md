@@ -110,3 +110,32 @@ python2 vol.py -f memory.raw --profile=win7sp1x64 pslist
 trong volatility, nhiều option được quản lý qua cấu hình chung hoặc được plugin đăng ký
 riêng, nên cách đặt tên và cách xuất file có thể không đồng nhất
 
+**1. profile**
+
+profile là gói thông tin mô tả cấu trúc và symbol của hệ điều hành mục tiêu
+
+profile cần biết các thông tin như tên type, offset của field, kích thước object, kiểu dữ liệu,
+constant, kiến trúc và một số overlay đặc thù
+
+ví dụ plugin muốn đọc tên image của một process cần biết vị trí của field ImageFileName
+trong cấu trúc _EPROCESS
+
+nếu offset của profile không khớp kernel trong ảnh, việc đọc field sẽ sai dù file ảnh vẫn đọc
+được
+
+profile thường được chọn qua **```imageinfo```** ,**```kdbgscan```** hoặc hiểu biết từ hệ thống thu thập
+
+```
+profile cần biết các thông tin như tên type, offset của field, kích thước object, kiểu dữ liệu,
+constant, kiến trúc và một số overlay đặc thù
+ví dụ plugin muốn đọc tên image của một process cần biết vị trí của field ImageFileName
+trong cấu trúc _EPROCESS
+nếu offset của profile không khớp kernel trong ảnh, việc đọc field sẽ sai dù file ảnh vẫn đọc
+được
+profile thường được chọn qua imageinfo , kdbgscan hoặc hiểu biết từ hệ thống thu thậ
+```
+
+```imageinfo``` đưa ra gợi ý, không phải bằng chứng tuyệt đối rằng profile đầu tiên là đúng
+cần xác nhận bằng kiến trúc  bit hoặc  bit, kernel debugger block, thời gian khởi động,
+tiến trình hệ thống, module và kết quả của nhiều plugin
+
