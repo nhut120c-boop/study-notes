@@ -157,4 +157,16 @@ trong volshell có thể xem stack
 >>> addrspace().base
 >>> addrspace().base.base
 ```
+một ```address space``` thường có các thuộc tính như ```base``` , ```profile``` , ```name``` , ```order``` , ```dtb``` và ```pae```
+
+```dtb``` hoặc ```cr``` là giá trị dùng để bắt đầu dịch page table của một không gian địa chỉ
+
+```vtop``` chuyển ```virtual address``` thành ```physical offset``` nếu mapping tồn tại
+
+```read``` có thể trả ít byte hơn yêu cầu khi vùng dữ liệu bị thiếu
+
+```zread``` thường điền số không vào phần không đọc được để giữ độ dài yêu cầu trong một số
+trường hợp paging
+
+
 
