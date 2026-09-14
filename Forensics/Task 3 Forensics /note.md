@@ -168,6 +168,16 @@ một ```address space``` thường có các thuộc tính như ```base``` , ```
 ```zread``` thường điền số không vào phần không đọc được để giữ độ dài yêu cầu trong một số
 trường hợp paging
 
-**object model và overlay**
+**5.object model và overlay**
+
+plugin volatility thường lấy object từ profile bằng các lớp như ```_EPROCESS``` , ```_FILE_OBJECT``` ,
+```_DRIVER_OBJECT``` hoặc type kernel tương ứng
+
+```overlay``` cho phép thêm method, sửa cách diễn giải field hoặc gắn logic đặc thù vào type
+mô hình này mạnh nhưng có thể khó theo dõi vì ```object proxy``` không phải luôn là kiểu
+python nguyên bản
+
+trong một số trường hợp thứ tự toán tử trên proxy object có thể ảnh hưởng kết quả, ví dụ
+phép cộng giữa object và số có thể không tương đương với phép cộng theo thứ tự ngược lại
 
 
