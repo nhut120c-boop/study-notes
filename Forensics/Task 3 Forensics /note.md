@@ -168,5 +168,6 @@ một ```address space``` thường có các thuộc tính như ```base``` , ```
 ```zread``` thường điền số không vào phần không đọc được để giữ độ dài yêu cầu trong một số
 trường hợp paging
 
+**object model và overlay**
 
 
