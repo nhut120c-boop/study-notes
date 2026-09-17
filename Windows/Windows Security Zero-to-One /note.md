@@ -14,7 +14,7 @@ Hướng dẫn về Windows từ 0 đến 1
 
 ---
 
-1. What Windows ism
+## 1. What Windows ism
 
 1.1 An operating system, concretely
 
