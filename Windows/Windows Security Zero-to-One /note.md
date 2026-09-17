@@ -22,3 +22,10 @@ Một hệ điều hành là phần mềm nằm giữa phần cứng và ứng d
 
 Windows là 1 hệ điều hành của Mirosoft, mọi phiên bản windows như 7 10 11 đều dùng chung 1 thiết kế cốt lõi là Windows NT ( NT = New Technology)
 
+1.2 Các tếp thực thi chính tao nên Windows
+
+Windows không phải là 1 chương trình đơn lẻ, nó tập hợp các tệp cụ thể với từng nhiệm vụ riêng 
+
+---
+ntoskrnl.exe
+---
