@@ -26,6 +26,6 @@ Windows là 1 hệ điều hành của Mirosoft, mọi phiên bản windows như
 
 Windows không phải là 1 chương trình đơn lẻ, nó tập hợp các tệp cụ thể với từng nhiệm vụ riêng 
 
----
-ntoskrnl.exe
----
+|Tệp|Vai trò|
+|---|-------|
+|ntoskrnl.exe|Tệp thực thi của windows, phần nhân cốt lõi của hệ điều hành|
