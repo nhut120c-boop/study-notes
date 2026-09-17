@@ -27,7 +27,7 @@ Windows là 1 hệ điều hành của Mirosoft, mọi phiên bản windows như
 Windows không phải là 1 chương trình đơn lẻ, nó tập hợp các tệp cụ thể với từng nhiệm vụ riêng 
 
 |Tệp|Vai trò|
-|---|-------|
-|ntoskrnl.exe|Tệp thực thi của windows, phần nhân cốt lõi của hệ điều hành|
-|hal.dll|Hardware Abstraction Layer - Giúp đồng bộ phần cứng với kernel, tránh sự khác biệt|
-|ntdll.dll||
+  |---|-------|
+  |ntoskrnl.exe|Tệp thực thi của windows, phần nhân cốt lõi của hệ điều hành|
+  |hal.dll|Hardware Abstraction Layer - Giúp đồng bộ phần cứng với kernel, tránh sự khác biệt|
+  |ntdll.dll||
