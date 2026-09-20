@@ -30,4 +30,4 @@ Windows không phải là 1 chương trình đơn lẻ, nó tập hợp các t�
   |---|-------|
   |ntoskrnl.exe|Tệp thực thi của windows, phần nhân cốt lõi của hệ điều hành|
   |hal.dll|Hardware Abstraction Layer - Giúp đồng bộ phần cứng với kernel, tránh sự khác biệt|
-  |ntdll.dll||
+  |ntdll.dll|giúp app và kernel tương tác, đứng giữa để cấp quyền|
