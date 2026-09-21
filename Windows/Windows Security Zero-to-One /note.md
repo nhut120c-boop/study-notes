@@ -35,3 +35,5 @@ Windows không phải là 1 chương trình đơn lẻ, nó tập hợp các t�
   |user32.dll|các API về UX/UI và GUI|
   |win32k.sys|nhận yêu cầu từ user32.sys và hành động nó ở kernel|
   |lsass.exe|liên quan trực tiếp tới advapi.dll nhằm để xác thực |
+  |services.exe|chạy và dừng dịch vụ của hệ thống và bên ngoài, ví dụ như tường lửa, vpn, anti virus....|
+  |csrss.exe|nhằm quản lí các tiến trình, thu hồi tài nguyên, tắt mở máy |
