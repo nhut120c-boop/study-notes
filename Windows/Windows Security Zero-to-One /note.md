@@ -38,3 +38,36 @@ Windows không phải là 1 chương trình đơn lẻ, nó tập hợp các t�
   |services.exe|chạy và dừng dịch vụ của hệ thống và bên ngoài, ví dụ như tường lửa, vpn, anti virus....|
   |csrss.exe|nhằm quản lí các tiến trình, thu hồi tài nguyên, tắt mở máy |
   |wininit.exe|wininit để khởi đông máy và khởi tạo các dịch vụ cơ bản như services.exe....|
+  
+  1.3 Windows dưới dạng một hệ thống phân tầng
+
+  Windows có cấu trúc từ phần cứng đén ứng dụng
+
+  Ứng dụng
+  
+->
+
+  Win32 API 
+  
+->
+  ntdll.dll
+
+->
+
+**Sang kernel mode**
+
+ntosknl.exe
+
+->
+
+  các driver
+
+-> 
+
+  hal.dll
+
+-> 
+
+hardware 
+
+  
