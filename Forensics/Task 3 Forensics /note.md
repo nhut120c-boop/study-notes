@@ -180,4 +180,21 @@ python nguyên bản
 trong một số trường hợp thứ tự toán tử trên proxy object có thể ảnh hưởng kết quả, ví dụ
 phép cộng giữa object và số có thể không tương đương với phép cộng theo thứ tự ngược lại
 
+trong một số trường hợp thứ tự toán tử trên proxy object có thể ảnh hưởng kết quả, ví dụ
+phép cộng giữa object và số có thể không tương đương với phép cộng theo thứ tự ngược lại
+
+**6. plugin volatility 2**
+plugin cơ bản gồm 
+
+|tên plugin|chức năng|
+---
+|pslist| đi theo process list|
+|psscan|để quét process object|
+|dlllist|để xem module của process|
+|netscan|để quét endpoint|
+|malfind|để quét vùng có dấu hiệu inject|
+
+## volatility
+ 
+
 
