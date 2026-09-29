@@ -204,9 +204,35 @@ Tham số không còn yêu cầu --profile. Vol3 tự động nhận diện cấ
 
 **ví dụ:** python3 vol.py -f memory.raw windows.pslist 
 
+**2. Translation Layers (Thay thế cho Address Space Stack)**
 
+thay vì khái niệm address space stack, vol3 sử dụng kiến trúc layers chặt chẽ hơn:
 
+file player: đọc byte thô từ file dump 
 
- 
+translation layers: đảm nhận việc phân tích page table, tự động dịch virtual address sang physical address 
+
+các lớp này tự động nhận diện định dạng file raw crash dump..... mà plugin không cần phải quan tâm. plugin ở tầng trên cùng chỉ cần tương tác trực tiếp với không gian bộ nhớ ảo thông qua các hàm đọc chuẩn, framework sẽ tự động đi xuống các layer dưới để xử lí và xử lí luôn các trường hợp page bị swap ( paged out ) nếu có pagefile đính kèm 
+
+**3. Oject Model và Templates**
+
+plugin vol3 lấy object từ symbol table thông qua các VTypes và Templates
+
+việc ép kiểu dữ liệu thô thành các object python như _EPROCESS linh hoạt nhưng an toàn hơn. các overlay rườm rà của vol2 được thay thế bằng các method xây dựng sẵn gắn trực tiếp vào templates của cấu trúc đó trong JSON 
+
+object proxy trong vol3 được tối ưu cho python3 vấn đề sai lệch kết quả do thứ tự toán tử trên proxy object ở Vol2 đã được khắc phục phần lớn nhờ vào hệ thống typing chặt chẽ hơn
+
+**4. Các Plugin cơ bản trong Volatility 3**
+
+các plugin nay bắt buộc phải có tiền tố hệ điều hành mac, windows, linux...
+
+|tên plugin |chức năng|
+|---|---|
+|windows.plist|liệt kê tiến trình đang chạy công khai|
+|windows psscan|tìm tẩt cả cac tiến trình đã bị hacker ẩn hoặc vừa mới tắt|
+|windows.dlllist|xem các file thư viện .dll mà một phần mềm đang dùng|
+|windows.netscan|xem lịch sử kết nói mạng, địa chỉ IP...|
+|wwindows.malfind|tìm các đoạn mã độc trong bộ nhớ của một phần mèm sạch|
+
 
 
