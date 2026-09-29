@@ -187,7 +187,6 @@ phép cộng giữa object và số có thể không tương đương với phé
 plugin cơ bản gồm 
 
 |tên plugin|chức năng|
----
 |pslist| đi theo process list|
 |psscan|để quét process object|
 |dlllist|để xem module của process|
