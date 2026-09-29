@@ -196,6 +196,16 @@ plugin cơ bản gồm
 
 ## volatility 3 
 
+Luồng cơ bản của Vocatility 3 
+
+Tham số không còn yêu cầu --profile. Vol3 tự động nhận diện cấu trúc thông qua Symbol Tables
+
+**cú pháp:** python3 vol.py -f 
+
+**ví dụ:** python3 vol.py -f memory.raw windows.pslist 
+
+
+
 
  
 
