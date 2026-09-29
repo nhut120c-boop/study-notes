@@ -22,3 +22,5 @@ ethertype luôn cố định là 0x0806 để báo hiệu cho card mạng biết
 | **SPA Byte 2** | **SPA Byte 3** | **THA Byte 0** | **THA Byte 1** | Offset 16 - 19 |
 | **THA Byte 2** | **THA Byte 3** | **THA Byte 4** | **THA Byte 5** | Offset 20 - 23 |
 | **TPA Byte 0** | **TPA Byte 1** | **TPA Byte 2** | **TPA Byte 3** | Offset 24 - 27 |
+
+
