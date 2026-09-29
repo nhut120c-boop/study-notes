@@ -194,7 +194,9 @@ plugin cơ bản gồm
 |netscan|để quét endpoint|
 |malfind|để quét vùng có dấu hiệu inject|
 
-## volatility
+## volatility 3 
+
+
  
 
 
