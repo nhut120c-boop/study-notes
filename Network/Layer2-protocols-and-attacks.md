@@ -111,4 +111,12 @@ gói tin demo phân tích
 https://mega.nz/file/66JjTThB#9LZSrVbRnM4pjzFcI_9RXEZW0DsIJmalZMKb8by8OP4
 ```
 
+## Chương 2: Khai thác & điều tra tấn công ARP POISONING 
+
+**1. điểm yếu gốc của giao  thức ARP** 
+
+không lưu trạng thái: thiết bị sẵn sàng cập nhật bảng ARP cache khi nhận được một bản tin ARP Reply, ngay cả khi nó không hề gửi ARP request nào trước đó 
+
+không có cơ chế xác thực: không có chữ kí số hay mật mã để chứng minh thiết bị thực sự sữu hữu ip mà request đã báo 
+
 
