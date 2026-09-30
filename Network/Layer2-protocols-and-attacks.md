@@ -23,4 +23,27 @@ ethertype luôn cố định là 0x0806 để báo hiệu cho card mạng biết
 | **THA Byte 2** | **THA Byte 3** | **THA Byte 4** | **THA Byte 5** | Offset 20 - 23 |
 | **TPA Byte 0** | **TPA Byte 1** | **TPA Byte 2** | **TPA Byte 3** | Offset 24 - 27 |
 
+HTYPE: khai báo loại môi trường mạng vật lí đang truyền tải
+
+ví dụ: 0x0001 ( ethernet)
+
+PTYPE: khai báo loại giao thức mạng 
+
+ví dụ: 0x0800 giao thức IPv4
+
+HLEN: xác định độ dài bằng byte của địa chỉ vật lí
+
+PLEN: xác định độ dài của địa chỉ IP 
+
+OPER: xác định hành động, 1 là gọi, 2 là trả lời 
+
+SHA: lưu địa chỉ mac của thiết bị gửi 
+
+SPA: lưu địa chỉ IP của địa chỉ gửi 
+
+THA: lưu địa chỉ mac của máy đích, chưa biết nó điền là 00:00:00:00:00 
+
+TPA: lưu địa chỉ IP đích 
+
+
 
