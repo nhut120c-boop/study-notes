@@ -87,6 +87,18 @@ TPA thay bằng SPA gói arp request
 
 GARP để thông báo chứ không dùng để tìm kiếm
 
+<img width="1091" height="376" alt="image" src="https://github.com/user-attachments/assets/49cb83c7-37a1-4ed7-b730-b485f31b1af7" />
+
+đây là cấu trúc của một gói tin ARP 
+
+Request payload gồm 
+
+<img width="1148" height="548" alt="image" src="https://github.com/user-attachments/assets/993a9956-9663-470c-86ca-40c1d8a6d447" />
+
+Reply payload gồm 
+
+<img width="1121" height="500" alt="image" src="https://github.com/user-attachments/assets/86a51563-bfcc-4fd8-b3e8-1e613e00af1e" />
+
 link demo 
 
 ```
