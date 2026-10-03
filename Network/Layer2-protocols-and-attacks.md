@@ -119,4 +119,60 @@ không lưu trạng thái: thiết bị sẵn sàng cập nhật bảng ARP cach
 
 không có cơ chế xác thực: không có chữ kí số hay mật mã để chứng minh thiết bị thực sự sữu hữu ip mà request đã báo 
 
+**Mình sẽ dựng 2 lab với mô hình 1 attack 1 victim để minh họa:**
+
+*Bước 1:* chuẩn bị 1 máy attack 
+
+<img width="1294" height="909" alt="image" src="https://github.com/user-attachments/assets/e5c6fdb7-5511-40db-a6a1-940e3023b4f8" />
+
+*Bước 2:* chuẩn bị máy victim 
+
+<img width="1142" height="930" alt="image" src="https://github.com/user-attachments/assets/e54c5f69-bd4e-4eca-8750-22bd0bb3c9fb" />
+
+*Bước 3:* cấu hình môi trường mạng cả 2 VM
+
+<img width="766" height="509" alt="image" src="https://github.com/user-attachments/assets/fed21d26-c687-400b-b1ae-c7860fc57faf" />
+
+
+<img width="774" height="515" alt="image" src="https://github.com/user-attachments/assets/25036447-3f30-4ea2-a5dd-3d4915eca8a2" />
+
+*Bước 4:* thu thập thông số định tuyến
+
+Trên Kali Linux, kẻ tấn công gõ lệnh ifconfig để xem IP của chính mình  là 192.168.110.6, từ đó suy ra dải mạng cục bộ cần quét là 192.168.110.0/24
+
+<img width="671" height="560" alt="image" src="https://github.com/user-attachments/assets/ac0dcaaf-1846-478b-9e62-74f282a051de" />
+
+sau đó attacker tiến hành scan all mạng bằng tool arp-scan
+
+
+<img width="828" height="614" alt="image" src="https://github.com/user-attachments/assets/a21951bc-92d4-4f59-b0d4-67062abf2ddc" />
+
+
+từ kết quả trả về, attacker có được danh sách chi tiết các địa chỉ IP đi kèm với địa chỉ MAC thực. attacker chọn máy nạn nhân có địa chỉ IP 192.168.110.122, với địa chỉ MAC tương ứng được quét ra là 08:00:27:6f:a9:6a. default gateway là 192.168.110.1
+Bước 5: bắt đầu tấn công 
+sau khi có được ip và gateway máy nạn nhân ta bắt đầu xài tool arpspoof gửi liên tục các gói arp reply giả mạo vào mạng 
+
+script xài trên máy attack
+
+```
+sudo arpspoof -i eth0 -t 192.168.110.122 192.168.110.1
+```
+<img width="852" height="464" alt="image" src="https://github.com/user-attachments/assets/c3d05f91-f34b-4f3c-92f7-1ef7af53a639" />
+
+Bước 6: kiểm tra lại kết quả ở máy victim
+
+mở cmd trên máy victim và gõ lệnh ```arp -a```
+
+<img width="1043" height="615" alt="image" src="https://github.com/user-attachments/assets/539da9bc-6211-48b7-ae23-cd3f5f523abd" />
+
+kết quả: địa chỉ MAC của Default Gateway 192.168.110.1 đã bị đổi thành địa chỉ MAC của máy attacker (08-00-27-5a-87-bc)
+
+Bước 7 : kiểm tra hậu quả
+
+Sau khi thành công chạy tool trên máy attack thì giờ máy victim đã hoàn toàn bị ngắt kết nối với môi trường mạng, khi ping 8.8.8.8 dễ bị timed out toàn bộ
+
+<img width="1178" height="933" alt="Ảnh chụp màn hình 2026-10-03 133537" src="https://github.com/user-attachments/assets/0d6ae32b-e831-4ae0-ba65-036909ad92a7" />
+
+
+
 
