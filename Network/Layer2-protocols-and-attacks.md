@@ -173,6 +173,7 @@ Sau khi thành công chạy tool trên máy attack thì giờ máy victim đã h
 
 <img width="1178" height="933" alt="Ảnh chụp màn hình 2026-10-03 133537" src="https://github.com/user-attachments/assets/0d6ae32b-e831-4ae0-ba65-036909ad92a7" />
 
+lab 2: 
 
 
 
