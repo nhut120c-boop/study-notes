@@ -173,7 +173,44 @@ Sau khi thành công chạy tool trên máy attack thì giờ máy victim đã h
 
 <img width="1178" height="933" alt="Ảnh chụp màn hình 2026-10-03 133537" src="https://github.com/user-attachments/assets/0d6ae32b-e831-4ae0-ba65-036909ad92a7" />
 
-lab 2: 
+tiếp theo là tới lab 2 
+
+## MAN-IN-THE-MIDDLE (ARP POISONING) & SECURITY MONITORING
+
+1. Chuẩn bị vm
+
+ vm attack 
+
+ <img width="938" height="627" alt="image" src="https://github.com/user-attachments/assets/9dfcd51c-2412-44ab-9af9-31ce1354716f" />
+
+ chuẩn bị vm victim 
+
+ <img width="890" height="641" alt="image" src="https://github.com/user-attachments/assets/e59f2863-bcd4-46c9-8fb8-d51ac64955e1" />
+
+2. scan victim
+
+công cụ sử dụng: apr-scan 
+
+lệnh sử dụng
+```
+sudo arp-scan --interface=eth0 --localnet
+```
+<img width="818" height="406" alt="image" src="https://github.com/user-attachments/assets/043b01b1-b3a3-4292-bdc6-d9d3603afa02" />
+
+thu được:
+
+gateway: 192.168.1.1 mac: 30:40:74:a0:6c:18
+
+victim 192.168.1.33 mac: 08:00:27:6f:a9:6a
+
+3. bắt đầu tấn công
+ trước tiên phải bật chuyển tiếp gói tin để mạng không bị nghẽn
+
+```
+sudo sysctl -w net.ipv4.ip_forward=1
+```
+
+<img width="559" height="380" alt="image" src="https://github.com/user-attachments/assets/22296159-8759-49bc-bb78-31e9ac1c1ca9" />
 
 
 
