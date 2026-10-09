@@ -233,5 +233,6 @@ sudo arpspoof -i eth0 -t 192.168.1.1 192.168.1.33
 ```
 <img width="960" height="642" alt="image" src="https://github.com/user-attachments/assets/06b04b50-5a0f-4c24-9689-d5883ff3f839" />
 
+khi đó win victim và router wifi đã bị lừa và các gói tín buộc phải đi qua 
 
 
