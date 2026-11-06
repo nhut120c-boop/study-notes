@@ -234,6 +234,541 @@ các plugin nay bắt buộc phải có tiền tố hệ điều hành mac, wind
 |windows.netscan|xem lịch sử kết nói mạng, địa chỉ IP...|
 |wwindows.malfind|tìm các đoạn mã độc trong bộ nhớ của một phần mèm sạch|
 
+## build profile cho linux memory
+
+**build profile** là quá trình tạo ra thông tin mô tả cấu trúc dữ liệu, offset và symbol của linux kernel để volatility đọc được các object trong file ram dump
+
+linux có nhiều phiên bản kernel khác nhau nên cấu trúc dữ liệu bên trong kernel có thể thay đổi theo phiên bản hoặc cách biên dịch
+
+ví dụ plugin `pslist` muốn đọc danh sách process thì phải biết cấu trúc `task_struct` và vị trí các field như `pid`, `comm`, `tasks`
+
+nếu profile không khớp với kernel của memory dump thì volatility có thể đọc sai offset, không tìm được process hoặc trả về kết quả sai
+
+**phân biệt vol2 và vol3**
+
+- `volatility2` sử dụng profile dạng `.zip` chứa `module.dwarf` và `System.map`
+- `volatility3` sử dụng symbol table dạng `.json` hoặc `.json.xz` được tạo bằng `dwarf2json`
+
+### 1. các thành phần cần biết
+
+| thành phần | chức năng |
+|---|---|
+| `uname -r` | kiểm tra phiên bản kernel đang chạy |
+| `linux-headers` | chứa các header phục vụ biên dịch module kernel |
+| `DWARF` | thông tin debug mô tả cấu trúc, kiểu dữ liệu và offset |
+| `module.dwarf` | file chứa thông tin cấu trúc kernel dùng để build profile vol2 |
+| `System.map` | bảng ánh xạ tên symbol với địa chỉ trong kernel |
+| `vmlinux` | file ELF của kernel, bản debug có thể chứa thông tin DWARF |
+| `vmlinuz` | file kernel đã nén thường dùng khi boot |
+| `dwarf2json` | công cụ chuyển thông tin DWARF thành ISF JSON |
+| `ISF` | intermediate symbol format dùng trong vol3 |
+| `kernel banner` | chuỗi nhận diện phiên bản và bản build kernel |
+
+**lưu ý**
+
+profile phải khớp với kernel của máy được lấy ram chứ không phải kernel của máy đang chạy volatility
+
+---
+
+## build linux profile cho volatility2
+
+volatility2 sử dụng profile để xác định cấu trúc dữ liệu và symbol của linux kernel
+
+profile thường được đóng gói thành file `.zip` gồm 2 thành phần chính
+
+- `module.dwarf` chứa thông tin cấu trúc và kiểu dữ liệu của kernel
+- `System.map` chứa tên symbol và địa chỉ tương ứng
+
+**1. kiểm tra phiên bản kernel**
+
+bước 1 mở terminal trên máy linux có kernel tương ứng với máy cần phân tích
+
+bước 2 kiểm tra phiên bản kernel
+
+```bash
+uname -a
+uname -r
+```
+
+ví dụ kết quả
+
+```text
+5.4.0-42-generic
+```
+
+cần ghi lại phiên bản kernel để tìm đúng `linux-headers` và `System.map`
+
+**2. cài các công cụ cần thiết**
+
+bước 1 cập nhật danh sách package
+
+```bash
+sudo apt update
+```
+
+bước 2 cài các công cụ
+
+```bash
+sudo apt install git build-essential dwarfdump zip linux-headers-$(uname -r)
+```
+
+| công cụ | chức năng |
+|---|---|
+| `git` | tải source code |
+| `build-essential` | cung cấp compiler và make |
+| `dwarfdump` | đọc và trích xuất thông tin DWARF |
+| `zip` | đóng gói profile |
+| `linux-headers` | cung cấp header tương ứng với kernel |
+
+**3. build module.dwarf**
+
+bước 1 clone source code volatility2
+
+```bash
+git clone https://github.com/volatilityfoundation/volatility.git
+```
+
+bước 2 mở thư mục dùng để build linux profile
+
+```bash
+cd volatility/tools/linux
+```
+
+bước 3 chạy lệnh build
+
+```bash
+make
+```
+
+lệnh `make` sẽ sử dụng kernel headers và công cụ DWARF để tạo thông tin mô tả cấu trúc kernel
+
+bước 4 kiểm tra file vừa tạo
+
+```bash
+ls -lh module.dwarf
+```
+
+nếu build thành công sẽ có file `module.dwarf`
+
+**lưu ý** volatility2 là framework cũ nên một số kernel mới có thể không tương thích với source code hoặc công cụ build
+
+nên sử dụng máy ảo có kernel cũ tương thích để thực hành build vol2
+
+**4. lấy System.map**
+
+`System.map` thường nằm trong thư mục `/boot`
+
+bước 1 kiểm tra danh sách System.map
+
+```bash
+ls /boot/System.map-*
+```
+
+bước 2 tìm file tương ứng với kernel đang chạy
+
+```bash
+ls -l /boot/System.map-$(uname -r)
+```
+
+ví dụ kết quả
+
+```text
+/boot/System.map-5.4.0-42-generic
+```
+
+**không được dùng System.map của kernel khác** vì địa chỉ symbol và cấu trúc kernel có thể không khớp
+
+**5. đóng gói linux profile**
+
+sau khi có `module.dwarf` và `System.map` thì đóng gói thành file ZIP
+
+bước 1 chạy lệnh
+
+```bash
+zip UbuntuProfile.zip module.dwarf /boot/System.map-$(uname -r)
+```
+
+bước 2 kiểm tra các file bên trong
+
+```bash
+unzip -l UbuntuProfile.zip
+```
+
+kết quả sẽ có file `UbuntuProfile.zip` chứa `module.dwarf` và `System.map`
+
+file ZIP này chính là linux profile dùng cho volatility2
+
+**6. thêm profile vào volatility2**
+
+bước 1 copy file `UbuntuProfile.zip` vào thư mục
+
+```text
+volatility/plugins/overlays/linux/
+```
+
+bước 2 quay lại thư mục chứa `vol.py`
+
+bước 3 kiểm tra volatility đã nhận profile chưa
+
+```bash
+python2 vol.py --info | grep Linux
+```
+
+ví dụ tên profile
+
+```text
+LinuxUbuntuProfilex64
+```
+
+tên profile thực tế phụ thuộc vào tên file ZIP và kiến trúc kernel
+
+**7. dùng profile để phân tích ram**
+
+bước 1 chuẩn bị file ram dump của linux
+
+ví dụ `memory.lime`
+
+bước 2 dùng plugin `linux_pslist` để liệt kê process
+
+```bash
+python2 vol.py -f memory.lime --profile=LinuxUbuntuProfilex64 linux_pslist
+```
+
+bước 3 kiểm tra thêm các plugin khác
+
+**xem cây process**
+
+```bash
+python2 vol.py -f memory.lime --profile=LinuxUbuntuProfilex64 linux_pstree
+```
+
+**xem kernel module**
+
+```bash
+python2 vol.py -f memory.lime --profile=LinuxUbuntuProfilex64 linux_lsmod
+```
+
+| plugin | chức năng |
+|---|---|
+| `linux_pslist` | liệt kê process theo danh sách của kernel |
+| `linux_pstree` | xem quan hệ cha con giữa các process |
+| `linux_lsmod` | liệt kê kernel module |
+
+nếu profile khớp với kernel và file ram dump được hỗ trợ thì volatility có thể đọc các cấu trúc kernel để trả về thông tin
+
+---
+
+## build linux symbol table cho volatility3
+
+volatility3 không sử dụng profile ZIP giống volatility2 mà sử dụng **symbol table** có định dạng `ISF JSON`
+
+để build ISF thường sử dụng công cụ `dwarf2json`
+
+**luồng build**
+
+```text
+memory dump
+    |
+    v
+xác định kernel banner
+    |
+    v
+tìm debug kernel tương ứng
+    |
+    v
+dwarf2json
+    |
+    v
+ISF JSON
+    |
+    v
+thêm vào volatility3
+    |
+    v
+phân tích memory dump
+```
+
+**1. xác định kernel của memory dump**
+
+bước 1 mở terminal tại thư mục volatility3
+
+bước 2 chạy plugin `banners`
+
+```bash
+python3 vol.py -f memory.lime banners
+```
+
+plugin sẽ quét memory dump để tìm chuỗi nhận diện kernel
+
+ví dụ
+
+```text
+Linux version 5.4.0-42-generic ...
+```
+
+cần xác định chính xác bản build kernel vì 2 máy có cùng phiên bản kernel chưa chắc có cấu trúc và symbol giống nhau
+
+**2. tìm debug kernel phù hợp**
+
+để tạo ISF cần có file `vmlinux` chứa thông tin DWARF
+
+trên Ubuntu file debug kernel thường có đường dẫn
+
+```text
+/usr/lib/debug/boot/vmlinux-<kernel-version>
+```
+
+bước 1 kiểm tra thư mục chứa debug kernel
+
+```bash
+ls /usr/lib/debug/boot/
+```
+
+bước 2 nếu không có file phù hợp thì cần tìm và cài đúng gói debug symbols của kernel mục tiêu
+
+ví dụ file cần tìm
+
+```text
+/usr/lib/debug/boot/vmlinux-5.4.0-42-generic
+```
+
+**phân biệt vmlinux và vmlinuz**
+
+| file | chức năng |
+|---|---|
+| `vmlinux` | file ELF của kernel, bản debug có thể chứa DWARF |
+| `vmlinuz` | kernel image đã nén dùng để boot |
+| `System.map` | chứa thông tin tên symbol và địa chỉ |
+| `DWARF` | chứa thông tin kiểu dữ liệu, cấu trúc và offset |
+
+**lưu ý** không phải file `vmlinux` nào cũng có đủ DWARF nên cần tìm đúng debug kernel
+
+**3. cài dwarf2json**
+
+bước 1 cài các công cụ cần thiết
+
+```bash
+sudo apt update
+sudo apt install git golang-go
+```
+
+cần kiểm tra phiên bản Go có đáp ứng yêu cầu của dwarf2json hay không
+
+bước 2 clone source code
+
+```bash
+git clone https://github.com/volatilityfoundation/dwarf2json.git
+```
+
+bước 3 mở thư mục
+
+```bash
+cd dwarf2json
+```
+
+bước 4 build công cụ
+
+```bash
+go build
+```
+
+bước 5 kiểm tra
+
+```bash
+./dwarf2json --help
+```
+
+nếu chạy thành công sẽ hiển thị các command và tham số của công cụ
+
+**4. tạo ISF JSON**
+
+sau khi có debug kernel thì dùng `dwarf2json` để chuyển thông tin DWARF thành JSON
+
+bước 1 xác định đường dẫn file `vmlinux`
+
+ví dụ
+
+```text
+/usr/lib/debug/boot/vmlinux-5.4.0-42-generic
+```
+
+bước 2 chạy lệnh
+
+```bash
+./dwarf2json linux \
+--elf /usr/lib/debug/boot/vmlinux-5.4.0-42-generic \
+> ubuntu-5.4.0-42.json
+```
+
+giải thích
+
+- `linux` chọn hệ điều hành linux
+- `--elf` chỉ định file ELF chứa DWARF
+- `>` chuyển kết quả ra file JSON
+- `ubuntu-5.4.0-42.json` là file ISF được tạo
+
+nếu có `System.map` tương ứng thì có thể thêm vào
+
+```bash
+./dwarf2json linux \
+--elf /usr/lib/debug/boot/vmlinux-5.4.0-42-generic \
+--system-map /boot/System.map-5.4.0-42-generic \
+> ubuntu-5.4.0-42.json
+```
+
+`--system-map` bổ sung thông tin symbol để tạo ISF đầy đủ hơn
+
+**5. kiểm tra ISF**
+
+bước 1 kiểm tra file đã tạo
+
+```bash
+ls -lh ubuntu-5.4.0-42.json
+```
+
+bước 2 kiểm tra cú pháp JSON
+
+```bash
+python3 -m json.tool ubuntu-5.4.0-42.json > /dev/null
+```
+
+nếu không có lỗi thì file JSON hợp lệ về cú pháp
+
+tuy nhiên file JSON hợp lệ chưa chắc đã khớp với kernel trong memory dump
+
+**6. thêm ISF vào volatility3**
+
+bước 1 xác định thư mục symbol của volatility3
+
+nếu cài bằng cách clone repository thì thư mục thường có dạng
+
+```text
+volatility3/volatility3/symbols/linux/
+```
+
+bước 2 copy file ISF vào thư mục trên
+
+ví dụ khi đứng ở thư mục cha của repository volatility3 và file JSON cũng nằm tại đây
+
+```bash
+mkdir -p volatility3/volatility3/symbols/linux
+
+cp ubuntu-5.4.0-42.json volatility3/volatility3/symbols/linux/
+```
+
+đường dẫn thực tế có thể khác tùy cách cài volatility3
+
+**7. kiểm tra volatility3 đã nhận ISF chưa**
+
+bước 1 mở thư mục chứa `vol.py`
+
+bước 2 chạy lệnh
+
+```bash
+python3 vol.py isfinfo
+```
+
+`isfinfo` dùng để liệt kê thông tin các ISF mà volatility3 nhận diện
+
+cần đối chiếu kernel banner trong ISF với banner lấy từ memory dump
+
+**8. phân tích memory dump**
+
+bước 1 sử dụng plugin `linux.pslist`
+
+```bash
+python3 vol.py -f memory.lime linux.pslist
+```
+
+bước 2 kiểm tra thêm các plugin
+
+**xem cây process**
+
+```bash
+python3 vol.py -f memory.lime linux.pstree
+```
+
+**xem kernel module**
+
+```bash
+python3 vol.py -f memory.lime linux.lsmod
+```
+
+| plugin | chức năng |
+|---|---|
+| `linux.pslist` | liệt kê process |
+| `linux.pstree` | xem quan hệ cha con giữa các process |
+| `linux.lsmod` | liệt kê kernel module |
+
+volatility3 sẽ tìm symbol table phù hợp thông qua thông tin kernel và cơ chế automagic mà không cần chỉ định `--profile` như volatility2
+
+---
+
+## các lỗi thường gặp khi build profile
+
+| lỗi | nguyên nhân | cách xử lý |
+|---|---|---|
+| không tìm thấy kernel headers | chưa cài header tương ứng | kiểm tra `/lib/modules/$(uname -r)/build` |
+| `make` báo lỗi | thiếu công cụ hoặc kernel không tương thích vol2 | kiểm tra compiler, headers và phiên bản kernel |
+| không có `module.dwarf` | quá trình build thất bại | kiểm tra output của `make` |
+| không tìm thấy `System.map` | thiếu file tương ứng với kernel | tìm đúng System.map của kernel |
+| dwarf2json báo thiếu DWARF | file ELF không có debug information | tìm đúng debug kernel |
+| ISF không được nhận | sai đường dẫn, lỗi định dạng hoặc cache | kiểm tra thư mục symbol và `isfinfo` |
+| kernel banner không khớp | dùng ISF của bản build kernel khác | tìm đúng debug kernel |
+| plugin trả kết quả rỗng | symbol sai, dump thiếu dữ liệu hoặc plugin không hỗ trợ | kiểm tra banner, symbol và file dump |
+
+**kiểm tra kernel headers**
+
+```bash
+ls /lib/modules/$(uname -r)/build
+```
+
+**kiểm tra kernel banner**
+
+```bash
+python3 vol.py -f memory.lime banners
+```
+
+**kiểm tra ISF**
+
+```bash
+python3 vol.py isfinfo
+```
+
+---
+
+## so sánh build profile giữa vol2 và vol3
+
+| tiêu chí | volatility2 | volatility3 |
+|---|---|---|
+| cơ chế | profile | symbol table |
+| định dạng | `.zip` | `.json`, `.json.xz` |
+| công cụ build | `make`, `dwarfdump` | `dwarf2json` |
+| dữ liệu cần có | `module.dwarf`, `System.map` | `vmlinux` có DWARF, có thể thêm `System.map` |
+| cách chọn | `--profile` | tự nhận diện symbol |
+| cách kiểm tra | `--info` | `isfinfo` |
+| python | python2 | python3 |
+| trạng thái | legacy | đang được phát triển |
+
+## kết luận
+
+để build profile cho linux memory cần xác định chính xác kernel của máy đã tạo ra memory dump
+
+**volatility2**
+
+`kernel headers` → `make` → `module.dwarf` + `System.map` → `profile.zip` → `linux_pslist`
+
+**volatility3**
+
+`kernel banner` → `debug kernel` → `dwarf2json` → `ISF JSON` → `linux.pslist`
+
+điểm quan trọng là **profile phải khớp với kernel của memory dump**
+
+build được file ZIP hoặc JSON không có nghĩa là đã thành công hoàn toàn, cần chạy plugin và kiểm tra dữ liệu trả về có hợp lý hay không
+
+---
+# Lab 0 
+
 
 
 
