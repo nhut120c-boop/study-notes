@@ -767,9 +767,55 @@ python3 vol.py isfinfo
 build được file ZIP hoặc JSON không có nghĩa là đã thành công hoàn toàn, cần chạy plugin và kiểm tra dữ liệu trả về có hợp lý hay không
 
 ---
-# Lab 0 
+# lab 0
 
+đầu tiên em tải chall và giải nén được file `Challenge.raw`, sau đó em dùng vol3 với `windows.psscan` để xem các tiến trình trong bản dump ram
 
+```bash
+python3 ~/volatility3/vol.py -f "$HOME/src/Challenge (1)/Challenge.raw" windows.psscan
+```
 
+em thấy `cmd.exe` có pid `2096` và được mở trước `DumpIt.exe` khoảng 30 giây, vì đề hỏi john đang làm gì lúc chụp ram nên em xem thử cậu ấy đã gõ lệnh gì trong cmd
 
+em chuyển sang vol2 để dùng `cmdscan` vì plugin đọc lịch sử lệnh của vol3 chưa hỗ trợ bản windows 7 32-bit trong lab này
 
+```bash
+./volatility_2.6_lin64_standalone -f "$HOME/src/Challenge (1)/Challenge.raw" --profile=Win7SP1x86 cmdscan
+```
+
+trong kết quả em thấy `Cmd #0` là lệnh john dùng để chạy file `demon.py.txt` trên desktop bằng python
+
+```text
+C:\Python27\python.exe C:\Users\hello\Desktop\demon.py.txt
+```
+
+tiếp theo em đổi `cmdscan` thành `consoles` để xem nội dung hiển thị trong cửa sổ cmd
+
+```bash
+./volatility_2.6_lin64_standalone -f "$HOME/src/Challenge (1)/Challenge.raw" --profile=Win7SP1x86 consoles
+```
+
+ở phần `Dump:` của `conhost.exe` pid `2104`, ngay dưới lệnh chạy python có chuỗi `335d366f5d6031767631707f` nên em thử chuyển từ hex sang byte
+
+```bash
+python3 -c 'print(bytes.fromhex("335d366f5d6031767631707f"))'
+```
+
+kết quả là `b'3]6o]`1vv1p\x7f'` và em chưa đọc ra nội dung, em quay lại đề thấy tác giả nhấn mạnh chữ **môi trường** và nhắc john dùng nhiều **biến**, nên em thử dùng `envars` để xem các biến môi trường trong ram
+
+```bash
+./volatility_2.6_lin64_standalone -f "$HOME/src/Challenge (1)/Challenge.raw" --profile=Win7SP1x86 envars
+```
+
+trong output của `cmd.exe` pid `2096`, em thấy biến `Thanos` có giá trị `xor and password`, em xử lý phần `xor` trước bằng cách thử đủ 256 khóa xor một byte
+
+```python
+ciphertext = bytes.fromhex("335d366f5d6031767631707f")
+
+for key in range(256):
+    plaintext = bytes(byte ^ key for byte in ciphertext)
+    if all(32 <= byte <= 126 for byte in plaintext):
+        print(f"0x{key:02x}  {plaintext.decode('ascii')}")
+```
+
+với khóa `0x02`, em nhận được `1_4m_b3tt3r}` có dấu
