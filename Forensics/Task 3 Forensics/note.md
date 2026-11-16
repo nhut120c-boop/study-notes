@@ -818,4 +818,26 @@ for key in range(256):
         print(f"0x{key:02x}  {plaintext.decode('ascii')}")
 ```
 
-với khóa `0x02`, em nhận được `1_4m_b3tt3r}` có dấu
+với khóa `0x02`, em nhận được `1_4m_b3tt3r}` có dấu `}` ở cuối nên em xác định đây là phần cuối của flag
+
+tiếp theo với manh mối `password`, em dùng `hashdump` để lấy hash của tài khoản `hello`
+
+```bash
+./volatility_2.6_lin64_standalone -f "$HOME/src/Challenge (1)/Challenge.raw" --profile=Win7SP1x86 hashdump
+```
+
+em lấy trường thứ tư trên dòng `hello` và được hash nt là `101da33f44e92c27835e64322d72e8b7`
+
+em thử tra hash này trên crackstation nhưng trang báo `Not found`, trong writeup gốc tác giả tra online và lấy được phần đầu là `flag{you_are_good_but`, nên em dùng chuỗi đó để tính lại hash và đối chiếu với kết quả từ ram
+
+```bash
+printf '%s' 'flag{you_are_good_but' |
+  iconv -f UTF-8 -t UTF-16LE |
+  openssl dgst -provider legacy -md4
+```
+
+hash tính lại khớp với hash của `hello`, em ghép hai phần lại và được flag
+
+```text
+flag{you_are_good_but1_4m_b3tt3r}
+```
