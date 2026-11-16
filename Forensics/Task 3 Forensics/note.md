@@ -775,6 +775,9 @@ build được file ZIP hoặc JSON không có nghĩa là đã thành công hoà
 python3 ~/volatility3/vol.py -f "$HOME/src/Challenge (1)/Challenge.raw" windows.psscan
 ```
 
+<img width="1122" height="806" alt="image" src="https://github.com/user-attachments/assets/3da47632-6e67-410c-bc2f-32ac3af98d94" />
+
+
 em thấy `cmd.exe` có pid `2096` và được mở trước `DumpIt.exe` khoảng 30 giây, vì đề hỏi john đang làm gì lúc chụp ram nên em xem thử cậu ấy đã gõ lệnh gì trong cmd
 
 em chuyển sang vol2 để dùng `cmdscan` vì plugin đọc lịch sử lệnh của vol3 chưa hỗ trợ bản windows 7 32-bit trong lab này
@@ -785,11 +788,17 @@ em chuyển sang vol2 để dùng `cmdscan` vì plugin đọc lịch sử lệnh
 
 trong kết quả em thấy `Cmd #0` là lệnh john dùng để chạy file `demon.py.txt` trên desktop bằng python
 
+<img width="1002" height="548" alt="image" src="https://github.com/user-attachments/assets/cc6cfc87-68f1-483b-b439-a271d8346cc3" />
+
+
 ```text
 C:\Python27\python.exe C:\Users\hello\Desktop\demon.py.txt
 ```
 
 tiếp theo em đổi `cmdscan` thành `consoles` để xem nội dung hiển thị trong cửa sổ cmd
+
+<img width="682" height="810" alt="image" src="https://github.com/user-attachments/assets/407ae76d-1a2e-4a9a-9118-0213d15527ba" />
+
 
 ```bash
 ./volatility_2.6_lin64_standalone -f "$HOME/src/Challenge (1)/Challenge.raw" --profile=Win7SP1x86 consoles
@@ -809,6 +818,8 @@ kết quả là `b'3]6o]`1vv1p\x7f'` và em chưa đọc ra nội dung, em quay 
 
 trong output của `cmd.exe` pid `2096`, em thấy biến `Thanos` có giá trị `xor and password`, em xử lý phần `xor` trước bằng cách thử đủ 256 khóa xor một byte
 
+<img width="687" height="152" alt="image" src="https://github.com/user-attachments/assets/b9522182-e13d-43b0-be43-baadd0f45746" />
+
 ```python
 ciphertext = bytes.fromhex("335d366f5d6031767631707f")
 
@@ -827,6 +838,8 @@ tiếp theo với manh mối `password`, em dùng `hashdump` để lấy hash c�
 ```
 
 em lấy trường thứ tư trên dòng `hello` và được hash nt là `101da33f44e92c27835e64322d72e8b7`
+
+<img width="701" height="165" alt="image" src="https://github.com/user-attachments/assets/f5da973a-9403-4117-b440-f834f4d62f73" />
 
 em thử tra hash này trên crackstation nhưng trang báo `Not found`, trong writeup gốc tác giả tra online và lấy được phần đầu là `flag{you_are_good_but`, nên em dùng chuỗi đó để tính lại hash và đối chiếu với kết quả từ ram
 
