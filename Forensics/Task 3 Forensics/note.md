@@ -1020,3 +1020,65 @@ tiếp theo em dùng pass để mở file
 <img width="726" height="163" alt="image" src="https://github.com/user-attachments/assets/7b1fba5a-427f-489a-965c-13ffba3a6d34" />
 
 tìm trong thùng rác có flag là ```flag{w0w_th1s_1s_Th3_SeC0nD_ST4g3_!!}```
+
+---
+
+## MemLabs Lab 3 - The Evil's Den
+
+Sau khi phân tích đề và dựa vào tên đề bài thì em xác định flag có 2 phần và có liên quan tới malware hoặc gì đó tương tự
+
+em dùng malfind nhưng không thấy gì đặc biệt, em dùng tiếp plugin cmdline để bắt đầu tìm kiếm các script đã chạy
+
+```
+C:\Users\zeroD\AppData\Local\Programs\Python\Python311\Scripts\vol.exe -q -r csv -f C:\Users\zeroD\Downloads\MemLabs-Lab3\MemoryDump_Lab3.raw -o C:\Users\zeroD\Desktop\volatility-master\output\run_9fcdc8d2-a30e-4369-adf7-d43b2c6604ae_windows_cmdline windows.cmdline
+```
+
+    <img width="1535" height="502" alt="image" src="https://github.com/user-attachments/assets/3aa7dd5f-f4c0-44b8-9382-685e03f34720" />
+
+tiến hành dump 2 file đó ( cách dump giống mấy bài trước nên em bỏ qua )
+
+<img width="427" height="535" alt="image" src="https://github.com/user-attachments/assets/d97a6f2b-4a59-4bea-9df7-4d1bc4fc2ff4" />
+
+sau khi dump, em mở evilscript.py để xem script đã làm gì với vip.txt
+
+và đây là tệp vip.txt
+
+<img width="392" height="161" alt="image" src="https://github.com/user-attachments/assets/aaefc06e-0958-479d-ac8f-9b33b9be5ae7" />
+
+
+script lấy chuỗi đầu vào từ sys.argv[1], XOR từng ký tự với số 3, sau đó mã hóa Base64 và ghi kết quả vào vip.txt
+
+để lấy lại chuỗi ban đầu, em làm ngược thứ tự trong script, tức là giải Base64 trước rồi XOR từng byte với 3. XOR hai lần với cùng một số sẽ trả lại giá trị ban đầu
+```
+import base64
+
+encoded = "am1gd2V4M20wXGs3b2U="
+data = base64.b64decode(encoded)
+result = bytes(byte ^ 3 for byte in data)
+
+print(result.decode("ascii"))
+kết quả thu được là nửa đầu của flag
+
+```
+```
+inctf{0n3_h4lf
+```
+
+tiếp theo em tìm các tệp lân cận ở ```desktop``` vì 2 file kia cũng được lưu ở desktop và thấy 1 file ảnh có tên là ```suspision1.jpeg```
+
+em dump nó ra và đặt tên là so.jpeg 
+
+<img width="1041" height="362" alt="image" src="https://github.com/user-attachments/assets/03c5462d-0972-4088-b3f5-14cf1e5d01a0" />
+
+em xài steghide để extract file ẩn và dùng nửa flag đầu làm pass vì đề kêu và được 
+
+<img width="381" height="112" alt="image" src="https://github.com/user-attachments/assets/cf4c2cd4-68c4-49ce-a193-6c60a0f7ada9" />
+
+
+<img width="458" height="111" alt="image" src="https://github.com/user-attachments/assets/4c519433-f5d9-40bf-b5ee-3e3863bc7685" />
+
+cat file secret em được nửa flag còn lại 
+
+<img width="506" height="183" alt="image" src="https://github.com/user-attachments/assets/d4a91f97-ff2a-424c-ab87-f1fa7829ea4c" />
+
+flag là ```inctf{0n3_h4lf_1s_n0t_3n0ugh}```
