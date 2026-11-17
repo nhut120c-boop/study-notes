@@ -1,4 +1,4 @@
-<img width="615" height="396" alt="image" src="https://github.com/user-attachments/assets/3de3556c-207a-4f9b-8592-52f52729b168" />## Dump Ram
+## Dump Ram
 **cách 1 lấy ram máy thật**
 
 công cụ ```ftk imager bản portable```
@@ -938,3 +938,76 @@ C:\Users\zeroD\AppData\Local\Programs\Python\Python311\Scripts\vol.exe -q -r csv
 Và giải nén thành công được flag 3 là 
 
 <img width="1335" height="657" alt="image" src="https://github.com/user-attachments/assets/b7e34065-db58-4fbd-b970-515fa1b168b5" />
+
+ ---
+ ## Lab 2 - A New World
+
+ Đầu tiên em phân tích đề thấy các manh mối chính là về biến môi trường, những task trình duyệt và phần mềm lưu trữ mật khẩu
+
+ Em dùng plugin chuyên về các biến môi trường để scan trước 
+
+ ```
+C:\Users\zeroD\AppData\Local\Programs\Python\Python311\Scripts\vol.exe -q -r csv -f C:\Users\zeroD\Downloads\MemLabs-Lab2\MemoryDump_Lab2.raw -o C:\Users\zeroD\Desktop\volatility-master\output\run_f5a95447-81d5-42e5-be60-d6313592ada6_windows_envars windows.envars
+
+```
+và thấy ở block 0x371970 có biến tạm là NEW_TMP có giá trị ```ZmxhZ3t3M2xjMG0zX1QwXyRUNGczXyFfT2ZfTDRCXzJ9```
+
+<img width="1085" height="327" alt="image" src="https://github.com/user-attachments/assets/5a043391-2db2-407c-8213-1117d3dddfc6" />
+
+khi decode ra được ```flag{w3lc0m3_T0_$T4g3_!_Of_L4B_2}```
+
+xong flag 1, tiếp theo là về các task liên quan tới trình duyệt, em check trước pslist các trình duyệt mà user xài bằng
+
+```C:\Users\zeroD\AppData\Local\Programs\Python\Python311\Scripts\vol.exe -q -r csv -f C:\Users\zeroD\Downloads\MemLabs-Lab2\MemoryDump_Lab2.raw -o C:\Users\zeroD\Desktop\volatility-master\output windows.pslist
+```
+<img width="1535" height="862" alt="image" src="https://github.com/user-attachments/assets/6c52e940-39cd-4739-bc75-135642518264" />
+
+thấy được chrome và vô tình thấy được phần mềm để user xài để lưu mật khẩu là keepass, 
+
+
+ta dùng filescan để truy tìm các file liên quan đến tiến trình này, mục đích tìm file history để dump lại nó 
+
+<img width="1341" height="562" alt="image" src="https://github.com/user-attachments/assets/4fdf75dd-7065-40a8-9f86-7495154d2253" />
+
+thấy được offset của file history của chrome 
+
+dùng dumpfile để dump lấy lại file để điều tra 
+```
+C:\Users\zeroD\AppData\Local\Programs\Python\Python311\Scripts\vol.exe -q -r csv -f C:\Users\zeroD\Downloads\MemLabs-Lab2\MemoryDump_Lab2.raw -o C:\Users\zeroD\Desktop\volatility-master\output\run_1b45309c-cb89-4b28-b04c-79058828fb7b_windows_dumpfiles windows.dumpfiles --physaddr 0x3fcfb1d0
+```
+
+<img width="782" height="277" alt="image" src="https://github.com/user-attachments/assets/f3a9f9f3-c10f-49f1-a9f9-fb6f9fa6d785" />
+
+đổi đuôi dat thành đuôi History và đưa vào sqlite để phân tích 
+<img width="1535" height="862" alt="image" src="https://github.com/user-attachments/assets/feaca11f-4895-4421-bf82-afeb15986ac9" />
+thấy 1 link megaz vào link thấy được 1 file important.zip, em tải nó về 
+
+<img width="1535" height="862" alt="image" src="https://github.com/user-attachments/assets/268b6ec0-7b08-4ff5-852e-96651709bb32" />
+ nó yêu cầu pass là sha1 của flag3 lab1, em quay lại thấy flag3 là flag{w3ll_3rd_stage_was_easy} sao đó băm nó thành sha1 6045dd90029719a039fd2d2ebcca718439dd100a và mở được flag3 là 
+ <img width="500" height="500" alt="Important" src="https://github.com/user-attachments/assets/7f24347d-ec4f-41d9-9e25-fa2a2d55493d" />
+
+tiếp tục còn flag cuối là liên quan tới keepass
+
+<img width="825" height="633" alt="image" src="https://github.com/user-attachments/assets/2a48d0c2-4770-47d6-b88a-d9f641328e67" />
+sau khi biết được đuôi của file keepass là .kdbx thì em bắt đầu lọc ra các file đuôi đó 
+
+<img width="797" height="107" alt="image" src="https://github.com/user-attachments/assets/c2dd36fa-074c-45a1-a8b8-aacba3ff1051" />
+thấy được 1 file hidden.kdbx 
+
+em dump nó về bằng 
+```
+C:\Users\zeroD\AppData\Local\Programs\Python\Python311\Scripts\vol.exe -q -r csv -f C:\Users\zeroD\Downloads\MemLabs-Lab2\MemoryDump_Lab2.raw -o C:\Users\zeroD\Desktop\volatility-master\output\run_4574f264-b219-4656-bce0-af76657bf15c_windows_dumpfiles windows.dumpfiles --physaddr 0x3fb112a0
+```
+sau khi dump về và xóa đuôi dat em mở lên và nó yêu cầu pass
+<img width="586" height="287" alt="image" src="https://github.com/user-attachments/assets/0db0b96d-b3b0-4461-ad3a-462f164a9585" />
+
+em thử tìm xem có file pass nào trong filescan không 
+
+<img width="627" height="138" alt="image" src="https://github.com/user-attachments/assets/4c5b48b0-ec50-4b45-997d-a409762804bd" />
+thấy được 1 file tên password.png, khi dump về và mở lên thấy được pass là ```P4SSw0rd_123```
+
+<img width="1447" height="2048" alt="image" src="https://github.com/user-attachments/assets/56b3ea3a-0eb3-4d1e-bcd7-b7652fc07324" />
+
+tiếp theo em dùng pass để mở file 
+<img width="726" height="163" alt="image" src="https://github.com/user-attachments/assets/7b1fba5a-427f-489a-965c-13ffba3a6d34" />
+tìm trong thùng rác có flag là ```flag{w0w_th1s_1s_Th3_SeC0nD_ST4g3_!!}```
