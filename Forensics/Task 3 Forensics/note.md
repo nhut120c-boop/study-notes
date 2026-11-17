@@ -1,4 +1,4 @@
-## Dump Ram
+<img width="615" height="396" alt="image" src="https://github.com/user-attachments/assets/3de3556c-207a-4f9b-8592-52f52729b168" />## Dump Ram
 **cách 1 lấy ram máy thật**
 
 công cụ ```ftk imager bản portable```
@@ -854,3 +854,87 @@ hash tính lại khớp với hash của `hello`, em ghép hai phần lại và 
 ```text
 flag{you_are_good_but1_4m_b3tt3r}
 ```
+---
+# lab 1
+Đầu tiên dọc đề bài em khoanh vùng được 3 điểm cần điều tra để tìm flag, 1 là màn hình chớ đen, 2 là 1 file quan trọng, 3 là ứng dụng vẽ 
+
+Đầu tiên em nhận định 1 cửa sổ chớp đen khá giống 1 script terminal đang chạy nên em xài plugin ```console``` để kiểm tra các lệnh đã chạy 
+
+```
+C:\Users\zeroD\Desktop\volatility-master\bin\vol2\volatility_2.6_win64_standalone\volatility_2.6_win64_standalone.exe -f C:\Users\zeroD\Downloads\MemLabs-Lab1\MemoryDump_Lab1.raw --profile=Win7SP1x64 consoles
+
+```
+và thấy được 
+
+<img width="887" height="332" alt="image" src="https://github.com/user-attachments/assets/d7229d46-2745-43b6-aa94-62b99242847b" />
+
+1 đoạn base64, decode ra là 
+
+<img width="737" height="582" alt="image" src="https://github.com/user-attachments/assets/c8220997-bb8e-47f7-9d94-fd62aec7b89a" />
+
+ta được flag đầu là 
+```
+flag{th1s_1s_th3_1st_st4g3!!}
+```
+tiếp theo tới ứng dụng, em xài plugin plist để xem các tiến trình đang hoạt động 
+
+```
+C:\Users\zeroD\AppData\Local\Programs\Python\Python311\Scripts\vol.exe -q -r csv -f C:\Users\zeroD\Downloads\MemLabs-Lab1\MemoryDump_Lab1.raw -o C:\Users\zeroD\Desktop\volatility-master\output\run_738b43f2-bc1a-4382-87e8-eb47a5a63827_windows_pslist windows.pslist
+
+```
+<img width="1102" height="287" alt="image" src="https://github.com/user-attachments/assets/d7cea0c6-dfb7-4b2c-b201-8588376be3bb" />
+
+thấy có 1 tiến trình là mspaint.exe, tiếp theo em dump thử dữ data của tiến trình đó để nhằm khôi phục lại tiến trình 
+
+```
+C:\Users\zeroD\AppData\Local\Programs\Python\Python311\Scripts\vol.exe -q -r csv -f C:\Users\zeroD\Downloads\MemLabs-Lab1\MemoryDump_Lab1.raw -o C:\Users\zeroD\Desktop\volatility-master\output windows.memmap --pid 2424 --dump
+```
+em xài memmap để dump lại tiến trình 2424
+
+và được 
+<img width="747" height="147" alt="image" src="https://github.com/user-attachments/assets/36232fc7-b5f3-494a-809f-6e080ad2d9d8" />
+
+1 file dmp, em đổi thành đuôi data sau đó mở bằng gimp lên 
+
+Sau khi xác định offset và kích thước thì có thể thấy cơ bản flag nằm ở offset 5230089 với kích thước 1640x350
+
+<img width="1465" height="862" alt="image" src="https://github.com/user-attachments/assets/55fb885b-cbe4-4067-b768-9bb9cf532d7a" />
+
+và khi phục hồi thành công thì flag là 
+
+<img width="615" height="396" alt="image" src="https://github.com/user-attachments/assets/20dfc3fb-f2b0-42eb-b214-f905e54a757c" />
+
+tiếp tục với flag cuối 
+
+Đề có nhắc 1 file quan trọng 
+
+nên em dùng plugin filescan để tìm all file trong đó 
+
+```
+C:\Users\zeroD\AppData\Local\Programs\Python\Python311\Scripts\vol.exe -q -r csv -f C:\Users\zeroD\Downloads\MemLabs-Lab1\MemoryDump_Lab1.raw -o C:\Users\zeroD\Desktop\volatility-master\output\run_972d37e9-e3ea-47ae-a92a-3e14191512eb_windows_filescan windows.filescan
+
+```
+Sau đó thấy được 1 file tên là ```important.rar```
+
+<img width="867" height="192" alt="image" src="https://github.com/user-attachments/assets/287ec24f-8028-4929-98a9-b20a8b21295c" />
+
+Tiếp theo em dump file đó ra ngoài bằng filedump với offset 0x3fa3ebc0 
+
+và được 1 file 
+
+<img width="420" height="173" alt="image" src="https://github.com/user-attachments/assets/71269e3f-d572-493d-9066-1a399fe5ad3f" />
+
+Khi mở file bằng Winrar nó yêu cầu pass là hash của pass Alissa 
+
+<img width="1055" height="505" alt="image" src="https://github.com/user-attachments/assets/7120b0c6-7fb2-43ff-9bd8-32a1bbecdb60" />
+
+em dùng 
+```
+C:\Users\zeroD\AppData\Local\Programs\Python\Python311\Scripts\vol.exe -q -r csv -f C:\Users\zeroD\Downloads\MemLabs-Lab1\MemoryDump_Lab1.raw -o C:\Users\zeroD\Desktop\volatility-master\output windows.registry.hashdump
+```
+để lấy hash của pass Alissa 
+
+<img width="1030" height="188" alt="image" src="https://github.com/user-attachments/assets/e7f80aa9-86ad-4d95-889e-ce6dbdeec259" />
+Và giải nén thành công được flag 3 là 
+
+<img width="1335" height="657" alt="image" src="https://github.com/user-attachments/assets/b7e34065-db58-4fbd-b970-515fa1b168b5" />
