@@ -1082,3 +1082,29 @@ cat file secret em được nửa flag còn lại
 <img width="506" height="183" alt="image" src="https://github.com/user-attachments/assets/d4a91f97-ff2a-424c-ab87-f1fa7829ea4c" />
 
 flag là ```inctf{0n3_h4lf_1s_n0t_3n0ugh}```
+
+---
+## lab 4
+
+đầu tiên em thử xài filescan rồi tìm các từ khóa như important, thì thấy 1 tệp important.txt nhưng không tày nào dump được
+
+<img width="817" height="137" alt="image" src="https://github.com/user-attachments/assets/0cfca7d7-1c2e-4a2c-b226-c8b986dfb02c" />
+
+em dùng tiếp handles để cầu may xem file có còn đang mở không, em quên luôn chi tiết là file đã bị xóa nên vẫn không có kết quả 
+
+Em tìm hiểu được là khi file bị xóa, nếu file có kích thước nhỏ file vẫn có thể được lưu ở bản ghi MFT. Đây là resident data
+
+em xài plugin mới là ```windows.mftscan.ResidentData```
+
+```
+C:\Users\zeroD\AppData\Local\Programs\Python\Python311\Scripts\vol.exe -q -r csv -f C:\Users\zeroD\Downloads\MemLabs-Lab4\MemoryDump_Lab4.raw -o C:\Users\zeroD\Desktop\volatility-master\output windows.mftscan.ResidentData
+```
+sau đó tìm từ khóa important 
+
+<img width="1126" height="245" alt="image" src="https://github.com/user-attachments/assets/28516cba-9e6c-49b1-bffb-1d5377110e24" />
+
+và được flag nằm trong hexdump của file 
+
+```
+inctf{1_is_n0t_EQu4l_7o_2_bUt_th1s_d0s3nt_m4ke_s3ns3}
+```
