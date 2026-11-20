@@ -1150,3 +1150,64 @@ khi dịch từng byte từ thập lục phân ra nhị phân và dịch tiếp 
 
 ```bi0s{M3m_l4B5_OVeR_!}```
 
+---
+
+## lab 6
+
+## lab 6
+
+Đầu tiên là em xài `filescan` thấy 1 file `flag.rar`
+
+nhưng không có pass, em để đó và phân tích tiếp
+
+<img width="720" height="342" alt="image" src="https://github.com/user-attachments/assets/a242c952-b66b-43b8-a86a-f9cb298385e0" />
+
+
+em xài `consoles` thấy Jaffa từng gõ `env` trong `cmd.exe` PID `880`. Lệnh đó báo lỗi nhưng nó làm em nghĩ tới biến môi trường, nên em chạy `envars` thử
+
+<img width="658" height="246" alt="image" src="https://github.com/user-attachments/assets/49085940-731f-4a7c-beed-97c7d731ca71" />
+
+```powershell
+vol.exe -f .\MemoryDump_Lab6.raw windows.envars --pid 880 3716 | Select-String 'RAR password'
+```
+
+em thấy biến `RAR password` có giá trị `easypeasyvirus` trong cả `cmd.exe` và WinRAR. Em lấy pass đó mở `flag.rar` thì được phần sau của flag
+
+<img width="932" height="617" alt="image" src="https://github.com/user-attachments/assets/f593fa1c-59e0-446e-ad41-554192372588" />
+
+C:\Users\zeroD\AppData\Local\Temp\Rar$DIb2040.24576.rartemp\flag2.png
+
+```text
+aN_Am4zINg_!_i_gU3Ss???}
+```
+
+còn phần đầu thì em dump file `History` của Chrome ở offset `0x5da5a610`, rồi mở bằng DB Browser for SQLite. Trong bảng `urls` em thấy link Pastebin `RSGSi1hk`
+
+trong Pastebin có link Google Docs và câu **`But David sent the key in mail.`**. Em mở tài liệu thì thấy giữa mấy đoạn Lorem ipsum có link `https://mega.nz/#!SrxQxYTQ`. Link này yêu cầu key nên em quay lại tìm mail của David
+
+em dump thử mấy file SQLite của Gmail nhưng chỉ thấy thông tin tài khoản. Sau đó em dump RAM của Firefox PID `2080` và thấy tiêu đề **`Mega Drive Key`**. Em giải nén khối gzip ở offset `0x5FE9000` trong `pid.2080.dmp` rồi tìm `THE KEY IS` thì ra được dòng này
+
+```text
+THE KEY IS zyWxCjCYYSEMA-hZe552qWVXiPwa5TecODbjnsscMIU
+```
+
+sau khi xem writeup em mới biết có thể quét luôn file `.raw` bằng `strings`. Trong Pastebin đã có câu `The key is...` nên có thể lấy chính cụm đó làm từ khóa để tìm nội dung mail
+
+```bash
+strings -a MemoryDump_Lab6.raw | grep -iF 'The key is'
+```
+
+em lấy chuỗi sau `THE KEY IS` nhập vào MEGA rồi tải được `flag_.png`, nhưng ảnh mở bị lỗi. Xem bằng hex thì thấy chunk đầu ghi `iHDR` trong khi PNG cần `IHDR`, nên em sửa byte `69` thành `49` ở offset `0x0C`
+
+sửa xong em mở được ảnh, ghép các dòng trong ảnh lại thì ra phần đầu
+
+```text
+inctf{thi5_cH4LL3Ng3_!s_g0nn4_b3_?_
+```
+
+cuối cùng em nối phần trong ảnh với phần trong `flag.rar` thì được flag đầy đủ
+
+```text
+inctf{thi5_cH4LL3Ng3_!s_g0nn4_b3_?_aN_Am4zINg_!_i_gU3Ss???}
+```
+
