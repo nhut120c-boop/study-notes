@@ -1108,3 +1108,45 @@ và được flag nằm trong hexdump của file
 ```
 inctf{1_is_n0t_EQu4l_7o_2_bUt_th1s_d0s3nt_m4ke_s3ns3}
 ```
+---
+## LAB 5 
+
+Sau khi đọc đề thì mình thấy 2 manh mối là một tệp cần phục hồi, những cái tên không đọc được và ứng dụng bị hay xài không vô được
+
+Đầu tiên em dùng filescan để tìm kiếm và khoanh vùng các tệp tin kì lạ 
+
+
+<img width="658" height="197" alt="image" src="https://github.com/user-attachments/assets/26fc3bdb-6dda-4b21-be66-c3fd0a0ed6f1" />
+
+	```\Users\SmartNet\Documents\SW1wb3J0YW50.rar```
+
+    sau khi decode thì nó là important.rar
+
+    em dump nó về và không có pass, tên file cũng là flag2, nên em biết cần tìm flag 1 để mở flag2 này
+
+    Sau khi tìm hiểu thì em biết được 1 plugin khá hữu ích, cũng là lần đầu em biết thông qua lab này, là ```iehistory```
+
+    em có dump tiến trình của notepad và tìm được flag 1 sau khi scan qua full file dump nhưng nó may rủi và không khả thi, nên em có xem writeup thì người ta xài iehistory để scan 
+
+    <img width="857" height="268" alt="image" src="https://github.com/user-attachments/assets/1cdd3954-763f-4a2a-adfe-8c1f759640ad" />
+
+Thấy được Simpson đã mở file
+
+flag 1 là flag{!!_w3LL_d0n3_St4g3-1_0f_L4B_5_D0n3_!!} 
+
+và đung nó để mở flag2 là 
+
+<img width="1080" height="1080" alt="Stage2" src="https://github.com/user-attachments/assets/738301c8-11c0-4194-8166-31d7c469148c" />
+
+tiếp theo manh mối là ứng dụng tôi hay xài bị lỗi, em thấy có 1 file NOTEPAD.EXE hay được user sử dùng và nằm ở mục video thay vì ở mục system32 
+
+em dump nó ra và quăng vào ghidra để phân tích thử, ở function ```entry```
+
+có 1 đoạn dài assembly lặp đi lặp lại việc nạp và xóa 1 byte gì đó 
+
+<img width="856" height="483" alt="image" src="https://github.com/user-attachments/assets/d37292b8-2bca-42ab-873e-acd284735b63" />
+
+khi dịch từng byte từ thập lục phân ra nhị phân và dịch tiếp sag ASCII thì ta được flag 
+
+```bi0s{M3m_l4B5_OVeR_!}```
+
