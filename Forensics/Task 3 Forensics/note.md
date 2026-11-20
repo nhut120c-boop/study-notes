@@ -1175,7 +1175,9 @@ em thấy biến `RAR password` có giá trị `easypeasyvirus` trong cả `cmd.
 
 <img width="932" height="617" alt="image" src="https://github.com/user-attachments/assets/f593fa1c-59e0-446e-ad41-554192372588" />
 
-C:\Users\zeroD\AppData\Local\Temp\Rar$DIb2040.24576.rartemp\flag2.png
+
+<img width="562" height="452" alt="image" src="https://github.com/user-attachments/assets/8f1373d8-517b-408c-bc77-64c610269195" />
+
 
 ```text
 aN_Am4zINg_!_i_gU3Ss???}
@@ -1203,7 +1205,8 @@ em lấy chuỗi sau `THE KEY IS` nhập vào MEGA rồi tải được `flag_.p
 
 sửa xong em mở được ảnh, ghép các dòng trong ảnh lại thì ra phần đầu
 
-<img width="515" height="497" alt="image" src="https://github.com/user-attachments/assets/52d3c881-8b2f-4036-b698-6bfb1cd4da18" />
+<img width="512" height="511" alt="image" src="https://github.com/user-attachments/assets/d6f5b00d-99df-4f55-975d-ebc2e530bc39" />
+
 
 
 ```text
