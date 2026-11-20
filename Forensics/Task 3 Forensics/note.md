@@ -1183,7 +1183,15 @@ aN_Am4zINg_!_i_gU3Ss???}
 
 còn phần đầu thì em dump file `History` của Chrome ở offset `0x5da5a610`, rồi mở bằng DB Browser for SQLite. Trong bảng `urls` em thấy link Pastebin `RSGSi1hk`
 
+<img width="1000" height="262" alt="image" src="https://github.com/user-attachments/assets/f668e23d-9a0a-4b02-9866-5d479c64bbfe" />
+
+
+<img width="1102" height="301" alt="image" src="https://github.com/user-attachments/assets/db8e7555-7d4b-46c4-b14d-6c1e86ea987f" />
+
 trong Pastebin có link Google Docs và câu **`But David sent the key in mail.`**. Em mở tài liệu thì thấy giữa mấy đoạn Lorem ipsum có link `https://mega.nz/#!SrxQxYTQ`. Link này yêu cầu key nên em quay lại tìm mail của David
+
+<img width="1206" height="497" alt="image" src="https://github.com/user-attachments/assets/4114081b-4d1e-408d-b275-6c1387461d93" />
+
 
 em dump thử mấy file SQLite của Gmail nhưng chỉ thấy thông tin tài khoản. Sau đó em dump RAM của Firefox PID `2080` và thấy tiêu đề **`Mega Drive Key`**. Em giải nén khối gzip ở offset `0x5FE9000` trong `pid.2080.dmp` rồi tìm `THE KEY IS` thì ra được dòng này
 
@@ -1191,15 +1199,12 @@ em dump thử mấy file SQLite của Gmail nhưng chỉ thấy thông tin tài 
 THE KEY IS zyWxCjCYYSEMA-hZe552qWVXiPwa5TecODbjnsscMIU
 ```
 
-sau khi xem writeup em mới biết có thể quét luôn file `.raw` bằng `strings`. Trong Pastebin đã có câu `The key is...` nên có thể lấy chính cụm đó làm từ khóa để tìm nội dung mail
-
-```bash
-strings -a MemoryDump_Lab6.raw | grep -iF 'The key is'
-```
-
 em lấy chuỗi sau `THE KEY IS` nhập vào MEGA rồi tải được `flag_.png`, nhưng ảnh mở bị lỗi. Xem bằng hex thì thấy chunk đầu ghi `iHDR` trong khi PNG cần `IHDR`, nên em sửa byte `69` thành `49` ở offset `0x0C`
 
 sửa xong em mở được ảnh, ghép các dòng trong ảnh lại thì ra phần đầu
+
+<img width="515" height="497" alt="image" src="https://github.com/user-attachments/assets/52d3c881-8b2f-4036-b698-6bfb1cd4da18" />
+
 
 ```text
 inctf{thi5_cH4LL3Ng3_!s_g0nn4_b3_?_
